@@ -18,8 +18,8 @@
  */
 package com.l2jserver.loginserver.network.gameserverpackets;
 
+import com.l2jserver.commons.network.BaseRecievePacket;
 import com.l2jserver.loginserver.mail.MailSystem;
-import com.l2jserver.util.network.BaseRecievePacket;
 
 /**
  * @author mrTJO

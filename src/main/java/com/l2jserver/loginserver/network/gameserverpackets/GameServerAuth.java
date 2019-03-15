@@ -24,14 +24,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.l2jserver.commons.dao.ServerNameDAO;
+import com.l2jserver.commons.network.BaseRecievePacket;
 import com.l2jserver.loginserver.GameServerTable;
 import com.l2jserver.loginserver.GameServerTable.GameServerInfo;
-import com.l2jserver.loginserver.config.Configuration;
 import com.l2jserver.loginserver.GameServerThread;
+import com.l2jserver.loginserver.config.Configuration;
 import com.l2jserver.loginserver.network.L2JGameServerPacketHandler.GameServerState;
 import com.l2jserver.loginserver.network.loginserverpackets.AuthResponse;
 import com.l2jserver.loginserver.network.loginserverpackets.LoginServerFail;
-import com.l2jserver.util.network.BaseRecievePacket;
 
 /**
  * Game Server Auth packet.

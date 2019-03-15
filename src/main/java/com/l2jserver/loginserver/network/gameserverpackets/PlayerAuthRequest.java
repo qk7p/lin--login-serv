@@ -18,11 +18,11 @@
  */
 package com.l2jserver.loginserver.network.gameserverpackets;
 
+import com.l2jserver.commons.network.BaseRecievePacket;
 import com.l2jserver.loginserver.GameServerThread;
 import com.l2jserver.loginserver.LoginController;
 import com.l2jserver.loginserver.SessionKey;
 import com.l2jserver.loginserver.network.loginserverpackets.PlayerAuthResponse;
-import com.l2jserver.util.network.BaseRecievePacket;
 
 /**
  * Player Auth Request packet.

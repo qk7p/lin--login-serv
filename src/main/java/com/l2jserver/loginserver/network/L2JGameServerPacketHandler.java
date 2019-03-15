@@ -21,6 +21,7 @@ package com.l2jserver.loginserver.network;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.l2jserver.commons.network.BaseRecievePacket;
 import com.l2jserver.loginserver.GameServerThread;
 import com.l2jserver.loginserver.config.Configuration;
 import com.l2jserver.loginserver.network.gameserverpackets.BlowFishKey;
@@ -36,7 +37,6 @@ import com.l2jserver.loginserver.network.gameserverpackets.RequestSendMail;
 import com.l2jserver.loginserver.network.gameserverpackets.RequestTempBan;
 import com.l2jserver.loginserver.network.gameserverpackets.ServerStatus;
 import com.l2jserver.loginserver.network.loginserverpackets.LoginServerFail;
-import com.l2jserver.util.network.BaseRecievePacket;
 
 /**
  * Game Server packet handler.

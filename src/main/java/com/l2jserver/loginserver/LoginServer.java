@@ -25,16 +25,15 @@ import java.net.InetAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.l2jserver.Server;
-import com.l2jserver.UPnPService;
+import com.l2jserver.commons.UPnPService;
 import com.l2jserver.commons.database.ConnectionFactory;
 import com.l2jserver.loginserver.config.Configuration;
 import com.l2jserver.loginserver.mail.MailSystem;
 import com.l2jserver.loginserver.network.L2LoginClient;
 import com.l2jserver.loginserver.network.L2LoginPacketHandler;
+import com.l2jserver.loginserver.status.Status;
 import com.l2jserver.mmocore.SelectorConfig;
 import com.l2jserver.mmocore.SelectorThread;
-import com.l2jserver.status.Status;
 
 /**
  * Login Server.
@@ -42,15 +41,15 @@ import com.l2jserver.status.Status;
  * @author Zoey76
  * @version 2.6.1.0
  */
-public final class L2LoginServer {
+public final class LoginServer {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(L2LoginServer.class);
+	private static final Logger LOG = LoggerFactory.getLogger(LoginServer.class);
 	
 	private static final String BANNED_IPS = "/config/banned_ip.cfg";
 	
 	public static final int PROTOCOL_REV = 0x0106;
 	
-	private static L2LoginServer _instance;
+	private static LoginServer _instance;
 	
 	private GameServerListener _gameServerListener;
 	
@@ -61,14 +60,14 @@ public final class L2LoginServer {
 	private Thread _restartLoginServer;
 	
 	public static void main(String[] args) {
-		new L2LoginServer();
+		new LoginServer();
 	}
 	
-	public static L2LoginServer getInstance() {
+	public static LoginServer getInstance() {
 		return _instance;
 	}
 	
-	private L2LoginServer() {
+	private LoginServer() {
 		_instance = this;
 		
 		// Prepare Database
@@ -118,7 +117,7 @@ public final class L2LoginServer {
 		
 		if (Configuration.getInstance().telnet().isEnabled()) {
 			try {
-				_statusServer = new Status(Server.serverMode);
+				_statusServer = new Status();
 				_statusServer.start();
 			} catch (Exception ex) {
 				LOG.warn("Failed to start the Telnet Server!", ex);

@@ -21,9 +21,9 @@ package com.l2jserver.loginserver.network.gameserverpackets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.l2jserver.commons.network.BaseRecievePacket;
 import com.l2jserver.loginserver.GameServerThread;
 import com.l2jserver.loginserver.LoginController;
-import com.l2jserver.util.network.BaseRecievePacket;
 
 /**
  * Change Access Level packet.

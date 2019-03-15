@@ -19,7 +19,7 @@
 package com.l2jserver.loginserver.network.loginserverpackets;
 
 import com.l2jserver.commons.dao.ServerNameDAO;
-import com.l2jserver.util.network.BaseSendablePacket;
+import com.l2jserver.commons.network.BaseSendablePacket;
 
 /**
  * @author -Wooden-

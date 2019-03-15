@@ -19,20 +19,16 @@
 package com.l2jserver.loginserver.status;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.l2jserver.loginserver.GameServerTable;
-import com.l2jserver.loginserver.L2LoginServer;
+import com.l2jserver.loginserver.LoginServer;
 import com.l2jserver.loginserver.LoginController;
 import com.l2jserver.loginserver.config.Configuration;
 
@@ -64,10 +60,10 @@ public final class LoginStatusThread extends Thread {
 	
 	private boolean isValidIP(Socket client) {
 		boolean result = false;
-		InetAddress ClientIP = client.getInetAddress();
+		InetAddress clientIP = client.getInetAddress();
 		
 		// convert IP to String, and compare with list
-		String clientStringIP = ClientIP.getHostAddress();
+		String clientStringIP = clientIP.getHostAddress();
 		
 		telnetOutput(1, "Connection from: " + clientStringIP);
 		
@@ -76,36 +72,23 @@ public final class LoginStatusThread extends Thread {
 			telnetOutput(2, "");
 		}
 		
-		// TODO(Zoey76): Remove this from this class.
-		final File file = new File("Config.TELNET_FILE");
-		try (InputStream telnetIS = new FileInputStream(file)) {
-			Properties telnetSettings = new Properties();
-			telnetSettings.load(telnetIS);
-			
-			String HostList = telnetSettings.getProperty("ListOfHosts", "127.0.0.1,localhost,::1");
-			
-			if (Configuration.getInstance().server().isDebug()) {
-				telnetOutput(3, "Comparing ip to list...");
-			}
-			
-			// compare
-			String ipToCompare = null;
-			for (String ip : HostList.split(",")) {
-				if (!result) {
-					ipToCompare = InetAddress.getByName(ip).getHostAddress();
-					if (clientStringIP.equals(ipToCompare)) {
-						result = true;
-					}
-					if (Configuration.getInstance().server().isDebug()) {
-						telnetOutput(3, clientStringIP + " = " + ipToCompare + "(" + ip + ") = " + result);
-					}
+		if (Configuration.getInstance().server().isDebug()) {
+			telnetOutput(3, "Comparing ip to list...");
+		}
+		
+		for (String host : Configuration.getInstance().telnet().getHosts()) {
+			try {
+				String ipToCompare = InetAddress.getByName(host).getHostAddress();
+				if (clientStringIP.equals(ipToCompare)) {
+					result = true;
 				}
+				
+				if (Configuration.getInstance().server().isDebug()) {
+					telnetOutput(3, clientStringIP + " = " + ipToCompare + "(" + host + ") = " + result);
+				}
+			} catch (Exception ex) {
+				LOG.warn("There has been an error parsing host {}!", host, ex);
 			}
-		} catch (Exception ex) {
-			if (Configuration.getInstance().server().isDebug()) {
-				telnetOutput(4, "");
-			}
-			telnetOutput(1, "Error: " + ex);
 		}
 		
 		if (Configuration.getInstance().server().isDebug()) {
@@ -188,12 +171,12 @@ public final class LoginStatusThread extends Thread {
 						_print.println("Please Enter the IP to Unblock!");
 					}
 				} else if (_usrCommand.startsWith("shutdown")) {
-					L2LoginServer.getInstance().shutdown(false);
+					LoginServer.getInstance().shutdown(false);
 					_print.println("Bye Bye!");
 					_print.flush();
 					_cSocket.close();
 				} else if (_usrCommand.startsWith("restart")) {
-					L2LoginServer.getInstance().shutdown(true);
+					LoginServer.getInstance().shutdown(true);
 					_print.println("Bye Bye!");
 					_print.flush();
 					_cSocket.close();

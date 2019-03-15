@@ -33,9 +33,9 @@ import org.slf4j.LoggerFactory;
 
 import com.l2jserver.commons.dao.ServerNameDAO;
 import com.l2jserver.commons.database.ConnectionFactory;
+import com.l2jserver.commons.util.Rnd;
 import com.l2jserver.loginserver.network.gameserverpackets.ServerStatus;
-import com.l2jserver.util.IPSubnet;
-import com.l2jserver.util.Rnd;
+import com.l2jserver.loginserver.util.IPSubnet;
 
 /**
  * Loads the game server names and initialize the game server tables.

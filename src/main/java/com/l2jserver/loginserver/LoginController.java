@@ -40,14 +40,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.l2jserver.commons.database.ConnectionFactory;
+import com.l2jserver.commons.util.Rnd;
 import com.l2jserver.loginserver.GameServerTable.GameServerInfo;
 import com.l2jserver.loginserver.config.Configuration;
 import com.l2jserver.loginserver.model.data.AccountInfo;
 import com.l2jserver.loginserver.network.L2LoginClient;
 import com.l2jserver.loginserver.network.gameserverpackets.ServerStatus;
 import com.l2jserver.loginserver.network.serverpackets.LoginFail.LoginFailReason;
-import com.l2jserver.util.Rnd;
-import com.l2jserver.util.crypt.ScrambledKeyPair;
+import com.l2jserver.loginserver.security.ScrambledKeyPair;
 
 /**
  * Login Controller.
@@ -94,7 +94,7 @@ public class LoginController {
 				_keyPairs[i] = new ScrambledKeyPair(keygen.generateKeyPair());
 			}
 			
-			testCipher((RSAPrivateKey) _keyPairs[0]._pair.getPrivate());
+			testCipher((RSAPrivateKey) _keyPairs[0].getPair().getPrivate());
 			
 			LOG.info("Cached 10 KeyPairs for RSA communication.");
 		} catch (Exception ex) {

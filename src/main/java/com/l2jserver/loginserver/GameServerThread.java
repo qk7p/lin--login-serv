@@ -35,6 +35,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.l2jserver.commons.dao.ServerNameDAO;
+import com.l2jserver.commons.network.BaseSendablePacket;
+import com.l2jserver.commons.security.crypt.NewCrypt;
+import com.l2jserver.commons.util.Util;
 import com.l2jserver.loginserver.GameServerTable.GameServerInfo;
 import com.l2jserver.loginserver.config.Configuration;
 import com.l2jserver.loginserver.network.L2JGameServerPacketHandler;
@@ -44,9 +47,6 @@ import com.l2jserver.loginserver.network.loginserverpackets.InitLS;
 import com.l2jserver.loginserver.network.loginserverpackets.KickPlayer;
 import com.l2jserver.loginserver.network.loginserverpackets.LoginServerFail;
 import com.l2jserver.loginserver.network.loginserverpackets.RequestCharacters;
-import com.l2jserver.util.Util;
-import com.l2jserver.util.crypt.NewCrypt;
-import com.l2jserver.util.network.BaseSendablePacket;
 
 /**
  * Game Server thread.
@@ -140,16 +140,16 @@ public class GameServerThread extends Thread {
 			}
 		} catch (IOException ex) {
 			final var serverName = (getServerId() != -1 ? "[" + getServerId() + "] " + ServerNameDAO.getServer(getServerId()) : "(" + _connectionIPAddress + ")");
-			LOG.info("Game Server {} lost connection!", serverName, ex);
-			broadcastToTelnet("Game Server " + serverName + "lost connection!" + ex.getMessage());
+			LOG.info("Game Server {} lost connection!", serverName);
+			broadcastToTelnet("Game Server " + serverName + "lost connection!");
 		} finally {
 			if (isAuthed()) {
 				_gsi.setDown();
 				
 				LOG.info("Server {}[{}] is now disconnected.", ServerNameDAO.getServer(getServerId()), getServerId());
 			}
-			L2LoginServer.getInstance().getGameServerListener().removeGameServer(this);
-			L2LoginServer.getInstance().getGameServerListener().removeFloodProtection(_connectionIp);
+			LoginServer.getInstance().getGameServerListener().removeGameServer(this);
+			LoginServer.getInstance().getGameServerListener().removeFloodProtection(_connectionIp);
 		}
 	}
 	
@@ -235,8 +235,8 @@ public class GameServerThread extends Thread {
 	}
 	
 	public void broadcastToTelnet(String msg) {
-		if (L2LoginServer.getInstance().getStatusServer() != null) {
-			L2LoginServer.getInstance().getStatusServer().sendMessageToTelnets(msg);
+		if (LoginServer.getInstance().getStatusServer() != null) {
+			LoginServer.getInstance().getStatusServer().sendMessageToTelnets(msg);
 		}
 	}
 	

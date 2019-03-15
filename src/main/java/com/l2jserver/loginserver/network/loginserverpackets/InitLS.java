@@ -18,8 +18,8 @@
  */
 package com.l2jserver.loginserver.network.loginserverpackets;
 
-import com.l2jserver.loginserver.L2LoginServer;
-import com.l2jserver.util.network.BaseSendablePacket;
+import com.l2jserver.commons.network.BaseSendablePacket;
+import com.l2jserver.loginserver.LoginServer;
 
 /**
  * @author -Wooden-
@@ -34,7 +34,7 @@ public class InitLS extends BaseSendablePacket {
 	
 	public InitLS(byte[] publickey) {
 		writeC(0x00);
-		writeD(L2LoginServer.PROTOCOL_REV);
+		writeD(LoginServer.PROTOCOL_REV);
 		writeD(publickey.length);
 		writeB(publickey);
 	}

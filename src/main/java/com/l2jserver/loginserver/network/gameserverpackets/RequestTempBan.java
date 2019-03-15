@@ -22,8 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.l2jserver.commons.database.ConnectionFactory;
+import com.l2jserver.commons.network.BaseRecievePacket;
 import com.l2jserver.loginserver.LoginController;
-import com.l2jserver.util.network.BaseRecievePacket;
 
 /**
  * Request Temp Ban packet.
