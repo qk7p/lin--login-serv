@@ -24,9 +24,10 @@ import org.aeonbits.owner.Config.Sources;
 /**
  * MMOConfiguration.
  * @author Zoey76
- * @version 2.6.1.0
+ * @version 2.6.1.1
  */
 @Sources({
+	"file:./config/mmo.properties",
 	"classpath:config/mmo.properties"
 })
 public interface MMOConfiguration extends Config {

@@ -26,9 +26,10 @@ import org.aeonbits.owner.Config.Sources;
 /**
  * Telnet Configuration.
  * @author Zoey76
- * @version 2.6.1.0
+ * @version 2.6.1.1
  */
 @Sources({
+	"file:./config/telnet.properties",
 	"classpath:config/telnet.properties"
 })
 public interface TelnetConfiguration extends Config {

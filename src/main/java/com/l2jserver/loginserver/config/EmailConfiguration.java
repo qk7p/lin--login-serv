@@ -24,9 +24,10 @@ import org.aeonbits.owner.Config.Sources;
 /**
  * Email Configuration.
  * @author Zoey76
- * @version 2.6.1.0
+ * @version 2.6.1.1
  */
 @Sources({
+	"file:./config/email.properties",
 	"classpath:config/email.properties"
 })
 public interface EmailConfiguration extends Config {

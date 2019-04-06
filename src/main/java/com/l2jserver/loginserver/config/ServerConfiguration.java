@@ -24,9 +24,10 @@ import org.aeonbits.owner.Config.Sources;
 /**
  * Server Configuration.
  * @author Zoey76
- * @version 2.6.1.0
+ * @version 2.6.1.1
  */
 @Sources({
+	"file:./config/server.properties",
 	"classpath:config/server.properties"
 })
 public interface ServerConfiguration extends Config {
