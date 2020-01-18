@@ -18,6 +18,7 @@
  */
 package com.l2jserver.loginserver.network.gameserverpackets;
 
+import static com.l2jserver.loginserver.config.Configuration.server;
 import static com.l2jserver.loginserver.network.L2JGameServerPacketHandler.GameServerState.BF_CONNECTED;
 import static javax.crypto.Cipher.DECRYPT_MODE;
 
@@ -29,7 +30,6 @@ import org.slf4j.LoggerFactory;
 import com.l2jserver.commons.network.BaseRecievePacket;
 import com.l2jserver.commons.security.crypt.NewCrypt;
 import com.l2jserver.loginserver.GameServerThread;
-import com.l2jserver.loginserver.config.Configuration;
 
 /**
  * Blowfish Key.
@@ -61,7 +61,7 @@ public class BlowFishKey extends BaseRecievePacket {
 			System.arraycopy(tempDecryptKey, i, key, 0, len - i);
 			
 			server.SetBlowFish(new NewCrypt(key));
-			if (Configuration.getInstance().server().isDebug()) {
+			if (server().isDebug()) {
 				LOG.info("New BlowFish key received, Blowfih Engine initialized:");
 			}
 			server.setLoginConnectionState(BF_CONNECTED);

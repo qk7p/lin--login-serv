@@ -18,6 +18,8 @@
  */
 package com.l2jserver.loginserver.network.gameserverpackets;
 
+import static com.l2jserver.loginserver.config.Configuration.server;
+
 import java.util.Arrays;
 
 import org.slf4j.Logger;
@@ -28,7 +30,6 @@ import com.l2jserver.commons.network.BaseRecievePacket;
 import com.l2jserver.loginserver.GameServerTable;
 import com.l2jserver.loginserver.GameServerTable.GameServerInfo;
 import com.l2jserver.loginserver.GameServerThread;
-import com.l2jserver.loginserver.config.Configuration;
 import com.l2jserver.loginserver.network.L2JGameServerPacketHandler.GameServerState;
 import com.l2jserver.loginserver.network.loginserverpackets.AuthResponse;
 import com.l2jserver.loginserver.network.loginserverpackets.LoginServerFail;
@@ -88,14 +89,14 @@ public class GameServerAuth extends BaseRecievePacket {
 			_hosts[i] = readS();
 		}
 		
-		if (Configuration.getInstance().server().isDebug()) {
+		if (server().isDebug()) {
 			LOG.info("Auth request received.");
 		}
 		
 		if (handleRegProcess()) {
 			AuthResponse ar = new AuthResponse(server.getGameServerInfo().getId());
 			server.sendPacket(ar);
-			if (Configuration.getInstance().server().isDebug()) {
+			if (server().isDebug()) {
 				LOG.info("Authed Id {}.", server.getGameServerInfo().getId());
 			}
 			server.broadcastToTelnet("GameServer [" + server.getServerId() + "] " + ServerNameDAO.getServer(server.getServerId()) + " is connected");
@@ -125,7 +126,7 @@ public class GameServerAuth extends BaseRecievePacket {
 			} else {
 				// there is already a server registered with the desired id and different hex id
 				// try to register this one with an alternative id
-				if (Configuration.getInstance().server().isAcceptNetGameServer() && _acceptAlternativeId) {
+				if (server().isAcceptNetGameServer() && _acceptAlternativeId) {
 					gsi = new GameServerInfo(id, hexId, _server);
 					if (gameServerTable.registerWithFirstAvailableId(gsi)) {
 						_server.attachGameServerInfo(gsi, _port, _hosts, _maxPlayers);
@@ -142,7 +143,7 @@ public class GameServerAuth extends BaseRecievePacket {
 			}
 		} else {
 			// can we register on this id?
-			if (Configuration.getInstance().server().isAcceptNetGameServer()) {
+			if (server().isAcceptNetGameServer()) {
 				gsi = new GameServerInfo(id, hexId, _server);
 				if (gameServerTable.register(id, gsi)) {
 					_server.attachGameServerInfo(gsi, _port, _hosts, _maxPlayers);

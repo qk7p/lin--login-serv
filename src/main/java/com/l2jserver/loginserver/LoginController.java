@@ -18,10 +18,12 @@
  */
 package com.l2jserver.loginserver;
 
+import static com.l2jserver.loginserver.config.Configuration.server;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.security.spec.RSAKeyGenParameterSpec.F4;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
 import java.security.interfaces.RSAPrivateKey;
@@ -42,7 +44,6 @@ import org.slf4j.LoggerFactory;
 import com.l2jserver.commons.database.ConnectionFactory;
 import com.l2jserver.commons.util.Rnd;
 import com.l2jserver.loginserver.GameServerTable.GameServerInfo;
-import com.l2jserver.loginserver.config.Configuration;
 import com.l2jserver.loginserver.model.data.AccountInfo;
 import com.l2jserver.loginserver.network.L2LoginClient;
 import com.l2jserver.loginserver.network.gameserverpackets.ServerStatus;
@@ -162,8 +163,8 @@ public class LoginController {
 		final var failedLoginAttemps = _failedLoginAttemps.getOrDefault(addr, 0) + 1;
 		_failedLoginAttemps.put(addr, failedLoginAttemps);
 		
-		if (failedLoginAttemps >= Configuration.getInstance().server().getLoginTryBeforeBan()) {
-			addBanForAddress(addr, Configuration.getInstance().server().getLoginBlockAfterBan() * 1000);
+		if (failedLoginAttemps >= server().getLoginTryBeforeBan()) {
+			addBanForAddress(addr, server().getLoginBlockAfterBan() * 1000);
 			// we need to clear the failed login attempts here, so after the ip ban is over the client has another 5 attempts
 			clearFailedLoginAttemps(addr);
 			LOG.warn("Added banned address {}, too many login attemps!", addr.getHostAddress());
@@ -186,7 +187,7 @@ public class LoginController {
 				ps.setString(2, login);
 				try (var rs = ps.executeQuery()) {
 					if (rs.next()) {
-						if (Configuration.getInstance().server().isDebug()) {
+						if (server().isDebug()) {
 							LOG.info("Account {} exists.", login);
 						}
 						
@@ -202,7 +203,7 @@ public class LoginController {
 				}
 			}
 			
-			if (!autoCreateIfEnabled || !Configuration.getInstance().server().autoCreateAccounts()) {
+			if (!autoCreateIfEnabled || !server().autoCreateAccounts()) {
 				// account does not exist and auto create account is not desired
 				recordFailedLoginAttemp(addr);
 				return null;

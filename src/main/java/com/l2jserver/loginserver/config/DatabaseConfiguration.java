@@ -26,53 +26,35 @@ import org.aeonbits.owner.Config.HotReload;
 import org.aeonbits.owner.Config.Sources;
 
 /**
- * Email Configuration.
+ * Database Configuration.
  * @author Zoey76
- * @version 2.6.1.1
+ * @version 2.6.1.5
  */
 @Sources({
-	"file:./config/email.properties",
-	"classpath:config/email.properties"
+	"file:./config/database.properties",
+	"classpath:config/database.properties"
 })
 @HotReload(value = 20, unit = MINUTES, type = ASYNC)
-public interface EmailConfiguration extends Config {
+public interface DatabaseConfiguration extends Config {
 	
-	@Key("EnableEmail")
-	boolean isEnabled();
+	@Key("Driver")
+	String getDriver();
 	
-	@Key("ServerName")
-	String getServerName();
+	@Key("URL")
+	String getURL();
 	
-	@Key("ServerEmail")
-	String getServerEmail();
+	@Key("User")
+	String getUser();
 	
-	@Key("SelectQuery")
-	String getSelectQuery();
+	@Key("Password")
+	String getPassword();
 	
-	@Key("DatabaseField")
-	String getDatabaseField();
+	@Key("ConnectionPool")
+	String getConnectionPool();
 	
-	@Key("Host")
-	String getHost();
+	@Key("MaxConnections")
+	Integer getMaxConnections();
 	
-	@Key("Port")
-	int getPort();
-	
-	@Key("SmtpAuthRequired")
-	boolean isSmtpAuthRequired();
-	
-	@Key("SmtpFactory")
-	String getSmtpFactory();
-	
-	@Key("SmtpFactoryCallback")
-	boolean smtpFactoryCallback();
-	
-	@Key("SmtpUsername")
-	String getSmtpUsername();
-	
-	@Key("SmtpPassword")
-	String getSmtpPassword();
-	
-	@Key("SystemAddress")
-	String getSystemAddress();
+	@Key("MaxIdleTime")
+	Integer getMaxIdleTime();
 }

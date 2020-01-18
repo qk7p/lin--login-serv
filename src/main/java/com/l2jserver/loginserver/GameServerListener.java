@@ -18,11 +18,11 @@
  */
 package com.l2jserver.loginserver;
 
+import static com.l2jserver.loginserver.config.Configuration.server;
+
 import java.net.Socket;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-
-import com.l2jserver.loginserver.config.Configuration;
 
 /**
  * Game Server listener.
@@ -33,7 +33,7 @@ public class GameServerListener extends FloodProtectedListener {
 	private static List<GameServerThread> _gameServers = new CopyOnWriteArrayList<>();
 	
 	public GameServerListener() throws Exception {
-		super(Configuration.getInstance().server().getGameServerHost(), Configuration.getInstance().server().getGameServerPort());
+		super(server().getGameServerHost(), server().getGameServerPort());
 		setName(getClass().getSimpleName());
 	}
 	

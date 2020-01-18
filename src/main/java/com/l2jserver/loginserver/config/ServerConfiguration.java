@@ -18,7 +18,11 @@
  */
 package com.l2jserver.loginserver.config;
 
+import static java.util.concurrent.TimeUnit.MINUTES;
+import static org.aeonbits.owner.Config.HotReloadType.ASYNC;
+
 import org.aeonbits.owner.Config;
+import org.aeonbits.owner.Config.HotReload;
 import org.aeonbits.owner.Config.Sources;
 
 /**
@@ -30,6 +34,7 @@ import org.aeonbits.owner.Config.Sources;
 	"file:./config/server.properties",
 	"classpath:config/server.properties"
 })
+@HotReload(value = 20, unit = MINUTES, type = ASYNC)
 public interface ServerConfiguration extends Config {
 	
 	@Key("EnableUPnP")
@@ -70,30 +75,6 @@ public interface ServerConfiguration extends Config {
 	
 	@Key("MaxConnectionPerIP")
 	int getMaxConnectionPerIP();
-	
-	@Key("DatabaseDriver")
-	String getDatabaseDriver();
-	
-	@Key("DatabaseURL")
-	String getDatabaseURL();
-	
-	@Key("DatabaseUser")
-	String getDatabaseUser();
-	
-	@Key("DatabasePassword")
-	String getDatabasePassword();
-	
-	@Key("DatabaseConnectionPool")
-	String getDatabaseConnectionPool();
-	
-	@Key("DatabaseMaximumPoolSize")
-	int getDatabaseMaximumPoolSize();
-	
-	@Key("DatabaseMaximumIdleTime")
-	int getDatabaseMaximumIdleTime();
-	
-	@Key("DatabaseConnectionCloseTime")
-	int getDatabaseConnectionCloseTime();
 	
 	@Key("ShowLicence")
 	boolean showLicense();

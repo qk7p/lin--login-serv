@@ -18,6 +18,8 @@
  */
 package com.l2jserver.loginserver.mail;
 
+import static com.l2jserver.loginserver.config.Configuration.email;
+import static com.l2jserver.loginserver.config.Configuration.server;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.BufferedInputStream;
@@ -33,8 +35,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-
-import com.l2jserver.loginserver.config.Configuration;
 
 /**
  * Mail System.
@@ -60,7 +60,7 @@ public class MailSystem {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setValidating(false);
 		factory.setIgnoringComments(true);
-		File file = new File(Configuration.getInstance().server().getDatapackRoot() + "data/mail/MailList.xml");
+		File file = new File(server().getDatapackRoot() + "data/mail/MailList.xml");
 		Document doc = null;
 		if (!file.exists()) {
 			LOG.warn("Cannot load email system - Missing file MailList.xml");
@@ -81,7 +81,7 @@ public class MailSystem {
 				String subject = d.getAttributes().getNamedItem("subject").getNodeValue();
 				String maFile = d.getAttributes().getNamedItem("file").getNodeValue();
 				
-				File mailFile = new File(Configuration.getInstance().server().getDatapackRoot() + "data/mail/" + maFile);
+				File mailFile = new File(server().getDatapackRoot() + "data/mail/" + maFile);
 				try (FileInputStream fis = new FileInputStream(mailFile);
 					BufferedInputStream bis = new BufferedInputStream(fis)) {
 					int bytes = bis.available();
@@ -90,8 +90,8 @@ public class MailSystem {
 					bis.read(raw);
 					String html = new String(raw, UTF_8);
 					html = html.replaceAll(System.lineSeparator(), "\n");
-					html = html.replace("%servermail%", Configuration.getInstance().email().getServerEmail());
-					html = html.replace("%servername%", Configuration.getInstance().email().getServerName());
+					html = html.replace("%servermail%", email().getServerEmail());
+					html = html.replace("%servername%", email().getServerName());
 					
 					_mailData.put(mailId, new MailContent(subject, html));
 				} catch (IOException ex) {

@@ -18,6 +18,8 @@
  */
 package com.l2jserver.loginserver.status;
 
+import static com.l2jserver.loginserver.config.Configuration.telnet;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -28,7 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.l2jserver.commons.util.Util;
-import com.l2jserver.loginserver.config.Configuration;
 
 public class Status extends Thread {
 	
@@ -44,7 +45,7 @@ public class Status extends Thread {
 	
 	public Status() throws IOException {
 		super("Status");
-		_statusPw = Configuration.getInstance().telnet().getPassword();
+		_statusPw = telnet().getPassword();
 		
 		if (_statusPw == null) {
 			_statusPw = Util.randomPassword(10);
@@ -53,10 +54,10 @@ public class Status extends Thread {
 			LOG.info("Password has been set to: {}", _statusPw);
 		}
 		
-		statusServerSocket = new ServerSocket(Configuration.getInstance().telnet().getPort());
+		statusServerSocket = new ServerSocket(telnet().getPort());
 		_uptime = (int) System.currentTimeMillis();
 		_loginStatus = new LinkedList<>();
-		LOG.info("Telnet server started successfully, listening on port {}.", Configuration.getInstance().telnet().getPort());
+		LOG.info("Telnet server started successfully, listening on port {}.", telnet().getPort());
 	}
 	
 	@Override

@@ -18,6 +18,8 @@
  */
 package com.l2jserver.loginserver.network.clientpackets;
 
+import static com.l2jserver.loginserver.config.Configuration.server;
+
 import java.net.InetAddress;
 
 import javax.crypto.Cipher;
@@ -28,7 +30,6 @@ import org.slf4j.LoggerFactory;
 import com.l2jserver.loginserver.GameServerTable.GameServerInfo;
 import com.l2jserver.loginserver.LoginController;
 import com.l2jserver.loginserver.LoginController.AuthLoginResult;
-import com.l2jserver.loginserver.config.Configuration;
 import com.l2jserver.loginserver.model.data.AccountInfo;
 import com.l2jserver.loginserver.network.L2LoginClient;
 import com.l2jserver.loginserver.network.L2LoginClient.LoginClientState;
@@ -117,7 +118,7 @@ public class RequestAuthLogin extends L2LoginClientPacket {
 				client.setState(LoginClientState.AUTHED_LOGIN);
 				client.setSessionKey(lc.assignSessionKeyToClient(info.getLogin(), client));
 				lc.getCharactersOnAccount(info.getLogin());
-				if (Configuration.getInstance().server().showLicense()) {
+				if (server().showLicense()) {
 					client.sendPacket(new LoginOk(getClient().getSessionKey()));
 				} else {
 					getClient().sendPacket(new ServerList(getClient()));

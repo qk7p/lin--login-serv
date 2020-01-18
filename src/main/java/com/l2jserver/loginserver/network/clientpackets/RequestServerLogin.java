@@ -18,9 +18,10 @@
  */
 package com.l2jserver.loginserver.network.clientpackets;
 
+import static com.l2jserver.loginserver.config.Configuration.server;
+
 import com.l2jserver.loginserver.LoginController;
 import com.l2jserver.loginserver.SessionKey;
-import com.l2jserver.loginserver.config.Configuration;
 import com.l2jserver.loginserver.network.serverpackets.LoginFail.LoginFailReason;
 import com.l2jserver.loginserver.network.serverpackets.PlayFail.PlayFailReason;
 import com.l2jserver.loginserver.network.serverpackets.PlayOk;
@@ -67,7 +68,7 @@ public class RequestServerLogin extends L2LoginClientPacket {
 	public void run() {
 		SessionKey sk = getClient().getSessionKey();
 		// if we didn't showed the license we can't check these values
-		if (!Configuration.getInstance().server().showLicense() || sk.checkLoginPair(_skey1, _skey2)) {
+		if (!server().showLicense() || sk.checkLoginPair(_skey1, _skey2)) {
 			if (LoginController.getInstance().isLoginPossible(getClient(), _serverId)) {
 				getClient().setJoinedGS(true);
 				getClient().sendPacket(new PlayOk(sk));

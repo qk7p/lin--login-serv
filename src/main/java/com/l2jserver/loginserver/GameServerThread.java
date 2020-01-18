@@ -18,6 +18,7 @@
  */
 package com.l2jserver.loginserver;
 
+import static com.l2jserver.loginserver.config.Configuration.server;
 import static com.l2jserver.loginserver.network.loginserverpackets.LoginServerFail.REASON_IP_BANNED;
 
 import java.io.BufferedOutputStream;
@@ -39,7 +40,6 @@ import com.l2jserver.commons.network.BaseSendablePacket;
 import com.l2jserver.commons.security.crypt.NewCrypt;
 import com.l2jserver.commons.util.Util;
 import com.l2jserver.loginserver.GameServerTable.GameServerInfo;
-import com.l2jserver.loginserver.config.Configuration;
 import com.l2jserver.loginserver.network.L2JGameServerPacketHandler;
 import com.l2jserver.loginserver.network.L2JGameServerPacketHandler.GameServerState;
 import com.l2jserver.loginserver.network.loginserverpackets.ChangePasswordResponse;
@@ -132,7 +132,7 @@ public class GameServerThread extends Thread {
 					return;
 				}
 				
-				if (Configuration.getInstance().server().isDebug()) {
+				if (server().isDebug()) {
 					LOG.warn("[C]" + System.lineSeparator() + Util.printData(data));
 				}
 				
@@ -217,7 +217,7 @@ public class GameServerThread extends Thread {
 		try {
 			byte[] data = sl.getContent();
 			NewCrypt.appendChecksum(data);
-			if (Configuration.getInstance().server().isDebug()) {
+			if (server().isDebug()) {
 				LOG.info("[S] {}:{}{}", sl.getClass().getSimpleName(), System.lineSeparator(), Util.printData(data));
 			}
 			_blowfish.crypt(data, 0, data.length);

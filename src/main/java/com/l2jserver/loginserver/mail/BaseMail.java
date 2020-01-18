@@ -18,6 +18,8 @@
  */
 package com.l2jserver.loginserver.mail;
 
+import static com.l2jserver.loginserver.config.Configuration.email;
+
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
@@ -34,7 +36,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.l2jserver.commons.database.ConnectionFactory;
-import com.l2jserver.loginserver.config.Configuration;
 
 /**
  * Base Mail.
@@ -51,7 +52,7 @@ public class BaseMail implements Runnable {
 		private final PasswordAuthentication _auth;
 		
 		public SmtpAuthenticator() {
-			_auth = new PasswordAuthentication(Configuration.getInstance().email().getSmtpUsername(), Configuration.getInstance().email().getSmtpPassword());
+			_auth = new PasswordAuthentication(email().getSmtpUsername(), email().getSmtpPassword());
 		}
 		
 		@Override
@@ -73,22 +74,22 @@ public class BaseMail implements Runnable {
 		
 		final var message = compileHtml(account, content.getText(), args);
 		final var mailProp = new Properties();
-		mailProp.put("mail.smtp.host", Configuration.getInstance().email().getHost());
-		mailProp.put("mail.smtp.auth", Configuration.getInstance().email().isSmtpAuthRequired());
-		mailProp.put("mail.smtp.port", Configuration.getInstance().email().getPort());
-		mailProp.put("mail.smtp.socketFactory.port", Configuration.getInstance().email().getPort());
-		mailProp.put("mail.smtp.socketFactory.class", Configuration.getInstance().email().getSmtpFactory());
-		mailProp.put("mail.smtp.socketFactory.fallback", Configuration.getInstance().email().smtpFactoryCallback());
-		final var authenticator = (Configuration.getInstance().email().isSmtpAuthRequired() ? new SmtpAuthenticator() : null);
+		mailProp.put("mail.smtp.host", email().getHost());
+		mailProp.put("mail.smtp.auth", email().isSmtpAuthRequired());
+		mailProp.put("mail.smtp.port", email().getPort());
+		mailProp.put("mail.smtp.socketFactory.port", email().getPort());
+		mailProp.put("mail.smtp.socketFactory.class", email().getSmtpFactory());
+		mailProp.put("mail.smtp.socketFactory.fallback", email().smtpFactoryCallback());
+		final var authenticator = (email().isSmtpAuthRequired() ? new SmtpAuthenticator() : null);
 		final var mailSession = Session.getDefaultInstance(mailProp, authenticator);
 		
 		try {
 			_messageMime = new MimeMessage(mailSession);
 			_messageMime.setSubject(content.getSubject());
 			try {
-				_messageMime.setFrom(new InternetAddress(Configuration.getInstance().email().getServerEmail(), Configuration.getInstance().email().getServerName()));
+				_messageMime.setFrom(new InternetAddress(email().getServerEmail(), email().getServerName()));
 			} catch (UnsupportedEncodingException ex) {
-				LOG.warn("Sender address {} is not Valid!", Configuration.getInstance().email().getServerEmail());
+				LOG.warn("Sender address {} is not Valid!", email().getServerEmail());
 			}
 			_messageMime.setContent(message, "text/html");
 			_messageMime.setRecipient(Message.RecipientType.TO, new InternetAddress(mailAddr));
@@ -108,11 +109,11 @@ public class BaseMail implements Runnable {
 	
 	private String getUserMail(String username) {
 		try (var con = ConnectionFactory.getInstance().getConnection();
-			var statement = con.prepareStatement(Configuration.getInstance().email().getSelectQuery())) {
+			var statement = con.prepareStatement(email().getSelectQuery())) {
 			statement.setString(1, username);
 			try (var rset = statement.executeQuery()) {
 				if (rset.next()) {
-					return rset.getString(Configuration.getInstance().email().getDatabaseField());
+					return rset.getString(email().getDatabaseField());
 				}
 			}
 		} catch (Exception ex) {

@@ -18,6 +18,8 @@
  */
 package com.l2jserver.loginserver;
 
+import static com.l2jserver.loginserver.config.Configuration.server;
+
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -26,8 +28,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.l2jserver.loginserver.config.Configuration;
 
 /**
  * Flood Protected listener.
@@ -56,14 +56,14 @@ public abstract class FloodProtectedListener extends Thread {
 		while (!isInterrupted()) {
 			try {
 				connection = _serverSocket.accept();
-				if (Configuration.getInstance().server().isFloodProtectionEnabled()) {
+				if (server().isFloodProtectionEnabled()) {
 					ForeignConnection fConnection = _floodProtection.get(connection.getInetAddress().getHostAddress());
 					if (fConnection != null) {
 						fConnection.connectionNumber += 1;
-						if (((fConnection.connectionNumber > Configuration.getInstance().server().getFastConnectionLimit()) && //
-							((System.currentTimeMillis() - fConnection.lastConnection) < Configuration.getInstance().server().getNormalConnectionTime())) || //
-							((System.currentTimeMillis() - fConnection.lastConnection) < Configuration.getInstance().server().getFastConnectionTime()) || //
-							(fConnection.connectionNumber > Configuration.getInstance().server().getMaxConnectionPerIP())) {
+						if (((fConnection.connectionNumber > server().getFastConnectionLimit()) && //
+							((System.currentTimeMillis() - fConnection.lastConnection) < server().getNormalConnectionTime())) || //
+							((System.currentTimeMillis() - fConnection.lastConnection) < server().getFastConnectionTime()) || //
+							(fConnection.connectionNumber > server().getMaxConnectionPerIP())) {
 							fConnection.lastConnection = System.currentTimeMillis();
 							connection.close();
 							fConnection.connectionNumber -= 1;
@@ -109,7 +109,7 @@ public abstract class FloodProtectedListener extends Thread {
 	public abstract void addClient(Socket s);
 	
 	public void removeFloodProtection(String ip) {
-		if (!Configuration.getInstance().server().isFloodProtectionEnabled()) {
+		if (!server().isFloodProtectionEnabled()) {
 			return;
 		}
 		ForeignConnection fConnection = _floodProtection.get(ip);

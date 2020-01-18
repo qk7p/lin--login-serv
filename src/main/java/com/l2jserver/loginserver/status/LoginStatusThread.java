@@ -18,6 +18,9 @@
  */
 package com.l2jserver.loginserver.status;
 
+import static com.l2jserver.loginserver.config.Configuration.server;
+import static com.l2jserver.loginserver.config.Configuration.telnet;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -28,9 +31,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.l2jserver.loginserver.GameServerTable;
-import com.l2jserver.loginserver.LoginServer;
 import com.l2jserver.loginserver.LoginController;
-import com.l2jserver.loginserver.config.Configuration;
+import com.l2jserver.loginserver.LoginServer;
 
 public final class LoginStatusThread extends Thread {
 	
@@ -68,22 +70,22 @@ public final class LoginStatusThread extends Thread {
 		telnetOutput(1, "Connection from: " + clientStringIP);
 		
 		// read and loop thru list of IPs, compare with newIP
-		if (Configuration.getInstance().server().isDebug()) {
+		if (server().isDebug()) {
 			telnetOutput(2, "");
 		}
 		
-		if (Configuration.getInstance().server().isDebug()) {
+		if (server().isDebug()) {
 			telnetOutput(3, "Comparing ip to list...");
 		}
 		
-		for (String host : Configuration.getInstance().telnet().getHosts()) {
+		for (String host : telnet().getHosts()) {
 			try {
 				String ipToCompare = InetAddress.getByName(host).getHostAddress();
 				if (clientStringIP.equals(ipToCompare)) {
 					result = true;
 				}
 				
-				if (Configuration.getInstance().server().isDebug()) {
+				if (server().isDebug()) {
 					telnetOutput(3, clientStringIP + " = " + ipToCompare + "(" + host + ") = " + result);
 				}
 			} catch (Exception ex) {
@@ -91,7 +93,7 @@ public final class LoginStatusThread extends Thread {
 			}
 		}
 		
-		if (Configuration.getInstance().server().isDebug()) {
+		if (server().isDebug()) {
 			telnetOutput(4, "Allow IP: " + result);
 		}
 		return result;

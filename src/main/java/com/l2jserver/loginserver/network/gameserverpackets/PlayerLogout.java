@@ -18,13 +18,14 @@
  */
 package com.l2jserver.loginserver.network.gameserverpackets;
 
+import static com.l2jserver.loginserver.config.Configuration.server;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.l2jserver.commons.dao.ServerNameDAO;
 import com.l2jserver.commons.network.BaseRecievePacket;
 import com.l2jserver.loginserver.GameServerThread;
-import com.l2jserver.loginserver.config.Configuration;
 
 /**
  * Player Logout packet.
@@ -40,7 +41,7 @@ public class PlayerLogout extends BaseRecievePacket {
 		String account = readS();
 		
 		server.removeAccountOnGameServer(account);
-		if (Configuration.getInstance().server().isDebug()) {
+		if (server().isDebug()) {
 			LOG.info("Player {} logged out from game server {}[{}].", account, ServerNameDAO.getServer(server.getServerId()), server.getServerId());
 		}
 		

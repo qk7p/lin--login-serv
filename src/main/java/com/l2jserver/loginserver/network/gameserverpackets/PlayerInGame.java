@@ -18,13 +18,14 @@
  */
 package com.l2jserver.loginserver.network.gameserverpackets;
 
+import static com.l2jserver.loginserver.config.Configuration.server;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.l2jserver.commons.dao.ServerNameDAO;
 import com.l2jserver.commons.network.BaseRecievePacket;
 import com.l2jserver.loginserver.GameServerThread;
-import com.l2jserver.loginserver.config.Configuration;
 
 /**
  * Player In Game packet.
@@ -41,7 +42,7 @@ public class PlayerInGame extends BaseRecievePacket {
 		for (int i = 0; i < size; i++) {
 			String account = readS();
 			server.addAccountOnGameServer(account);
-			if (Configuration.getInstance().server().isDebug()) {
+			if (server().isDebug()) {
 				LOG.info("Account {} logged in Game Server {}[{}].", account, ServerNameDAO.getServer(server.getServerId()), server.getServerId());
 			}
 			server.broadcastToTelnet("Account " + account + " logged in GameServer " + server.getServerId());

@@ -18,6 +18,12 @@
  */
 package com.l2jserver.loginserver;
 
+import static com.l2jserver.loginserver.config.Configuration.database;
+import static com.l2jserver.loginserver.config.Configuration.email;
+import static com.l2jserver.loginserver.config.Configuration.mmo;
+import static com.l2jserver.loginserver.config.Configuration.server;
+import static com.l2jserver.loginserver.config.Configuration.telnet;
+
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.net.InetAddress;
@@ -27,7 +33,6 @@ import org.slf4j.LoggerFactory;
 
 import com.l2jserver.commons.UPnPService;
 import com.l2jserver.commons.database.ConnectionFactory;
-import com.l2jserver.loginserver.config.Configuration;
 import com.l2jserver.loginserver.mail.MailSystem;
 import com.l2jserver.loginserver.network.L2LoginClient;
 import com.l2jserver.loginserver.network.L2LoginPacketHandler;
@@ -72,13 +77,13 @@ public final class LoginServer {
 		
 		// Prepare Database
 		ConnectionFactory.builder() //
-			.withDriver(Configuration.getInstance().server().getDatabaseDriver()) //
-			.withUrl(Configuration.getInstance().server().getDatabaseURL()) //
-			.withUser(Configuration.getInstance().server().getDatabaseUser()) //
-			.withPassword(Configuration.getInstance().server().getDatabasePassword()) //
-			.withConnectionPool(Configuration.getInstance().server().getDatabaseConnectionPool()) //
-			.withMaxIdleTime(Configuration.getInstance().server().getDatabaseMaximumIdleTime()) //
-			.withMaxPoolSize(Configuration.getInstance().server().getDatabaseMaximumPoolSize()) //
+			.withDriver(database().getDriver()) //
+			.withUrl(database().getURL()) //
+			.withUser(database().getUser()) //
+			.withPassword(database().getPassword()) //
+			.withConnectionPool(database().getConnectionPool()) //
+			.withMaxIdleTime(database().getMaxIdleTime()) //
+			.withMaxPoolSize(database().getMaxConnections()) //
 			.build();
 		
 		LoginController.getInstance();
@@ -87,15 +92,15 @@ public final class LoginServer {
 		
 		loadBanFile();
 		
-		if (Configuration.getInstance().email().isEnabled()) {
+		if (email().isEnabled()) {
 			MailSystem.getInstance();
 		}
 		
 		final SelectorConfig sc = new SelectorConfig();
-		sc.MAX_READ_PER_PASS = Configuration.getInstance().mmo().getMaxReadPerPass();
-		sc.MAX_SEND_PER_PASS = Configuration.getInstance().mmo().getMaxSendPerPass();
-		sc.SLEEP_TIME = Configuration.getInstance().mmo().getSleepTime();
-		sc.HELPER_BUFFER_COUNT = Configuration.getInstance().mmo().getHelperBufferCount();
+		sc.MAX_READ_PER_PASS = mmo().getMaxReadPerPass();
+		sc.MAX_SEND_PER_PASS = mmo().getMaxSendPerPass();
+		sc.SLEEP_TIME = mmo().getSleepTime();
+		sc.HELPER_BUFFER_COUNT = mmo().getHelperBufferCount();
 		
 		final L2LoginPacketHandler loginPacketHandler = new L2LoginPacketHandler();
 		final SelectorHelper selectorHelper = new SelectorHelper();
@@ -109,13 +114,13 @@ public final class LoginServer {
 		try {
 			_gameServerListener = new GameServerListener();
 			_gameServerListener.start();
-			LOG.info("Listening for game servers on {}:{}.", Configuration.getInstance().server().getGameServerHost(), Configuration.getInstance().server().getGameServerPort());
+			LOG.info("Listening for game servers on {}:{}.", server().getGameServerHost(), server().getGameServerPort());
 		} catch (Exception ex) {
 			LOG.error("Failed to start the Game Server Listener!", ex);
 			System.exit(1);
 		}
 		
-		if (Configuration.getInstance().telnet().isEnabled()) {
+		if (telnet().isEnabled()) {
 			try {
 				_statusServer = new Status();
 				_statusServer.start();
@@ -127,24 +132,24 @@ public final class LoginServer {
 		}
 		
 		InetAddress bindAddress = null;
-		if (!Configuration.getInstance().server().getHost().equals("*")) {
+		if (!server().getHost().equals("*")) {
 			try {
-				bindAddress = InetAddress.getByName(Configuration.getInstance().server().getGameServerHost());
+				bindAddress = InetAddress.getByName(server().getGameServerHost());
 			} catch (Exception ex) {
 				LOG.warn("The Login Server bind address is invalid, using all avaliable IPs!", ex);
 			}
 		}
 		try {
-			_selectorThread.openServerSocket(bindAddress, Configuration.getInstance().server().getPort());
+			_selectorThread.openServerSocket(bindAddress, server().getPort());
 			_selectorThread.start();
-			LOG.info("Login Server is now listening on {}:{}.", Configuration.getInstance().server().getHost(), Configuration.getInstance().server().getPort());
+			LOG.info("Login Server is now listening on {}:{}.", server().getHost(), server().getPort());
 		} catch (Exception ex) {
 			LOG.error("Failed to open server socket!", ex);
 			System.exit(1);
 		}
 		
-		if (Configuration.getInstance().server().isUPnPEnabled()) {
-			UPnPService.getInstance().load(Configuration.getInstance().server().getPort(), "L2J Login Server");
+		if (server().isUPnPEnabled()) {
+			UPnPService.getInstance().load(server().getPort(), "L2J Login Server");
 		}
 	}
 	
@@ -190,11 +195,11 @@ public final class LoginServer {
 		}
 		LOG.info("Loaded {} banned IPs.", LoginController.getInstance().getBannedIps().size());
 		
-		if (Configuration.getInstance().server().isLoginRestatEnabled()) {
+		if (server().isLoginRestatEnabled()) {
 			_restartLoginServer = new LoginServerRestart();
 			_restartLoginServer.setDaemon(true);
 			_restartLoginServer.start();
-			LOG.info("Scheduled restart after {} hours.", Configuration.getInstance().server().getLoginRestartTime());
+			LOG.info("Scheduled restart after {} hours.", server().getLoginRestartTime());
 		}
 	}
 	
@@ -207,7 +212,7 @@ public final class LoginServer {
 		public void run() {
 			while (!isInterrupted()) {
 				try {
-					Thread.sleep(Configuration.getInstance().server().getLoginRestartTime() * 3600000);
+					Thread.sleep(server().getLoginRestartTime() * 3600000);
 				} catch (InterruptedException e) {
 					return;
 				}

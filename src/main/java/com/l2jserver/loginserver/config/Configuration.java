@@ -27,42 +27,37 @@ import org.aeonbits.owner.ConfigFactory;
  */
 public class Configuration {
 	
-	private EmailConfiguration email;
+	private static final EmailConfiguration email = ConfigFactory.create(EmailConfiguration.class);
 	
-	private ServerConfiguration server;
+	private static final ServerConfiguration server = ConfigFactory.create(ServerConfiguration.class);
 	
-	private MMOConfiguration mmo;
+	private static final DatabaseConfiguration database = ConfigFactory.create(DatabaseConfiguration.class);
 	
-	private TelnetConfiguration telnet;
+	private static final MMOConfiguration mmo = ConfigFactory.create(MMOConfiguration.class);
+	
+	private static final TelnetConfiguration telnet = ConfigFactory.create(TelnetConfiguration.class);
 	
 	private Configuration() {
-		email = ConfigFactory.create(EmailConfiguration.class);
-		server = ConfigFactory.create(ServerConfiguration.class);
-		mmo = ConfigFactory.create(MMOConfiguration.class);
-		telnet = ConfigFactory.create(TelnetConfiguration.class);
+		// Do nothing.
 	}
 	
-	public EmailConfiguration email() {
+	public static EmailConfiguration email() {
 		return email;
 	}
 	
-	public ServerConfiguration server() {
+	public static ServerConfiguration server() {
 		return server;
 	}
 	
-	public MMOConfiguration mmo() {
+	public static DatabaseConfiguration database() {
+		return database;
+	}
+	
+	public static MMOConfiguration mmo() {
 		return mmo;
 	}
 	
-	public TelnetConfiguration telnet() {
+	public static TelnetConfiguration telnet() {
 		return telnet;
-	}
-	
-	public static Configuration getInstance() {
-		return SingletonHolder.INSTANCE;
-	}
-	
-	private static class SingletonHolder {
-		protected static final Configuration INSTANCE = new Configuration();
 	}
 }

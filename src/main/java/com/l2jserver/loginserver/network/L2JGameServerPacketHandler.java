@@ -18,12 +18,13 @@
  */
 package com.l2jserver.loginserver.network;
 
+import static com.l2jserver.loginserver.config.Configuration.email;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.l2jserver.commons.network.BaseRecievePacket;
 import com.l2jserver.loginserver.GameServerThread;
-import com.l2jserver.loginserver.config.Configuration;
 import com.l2jserver.loginserver.network.gameserverpackets.BlowFishKey;
 import com.l2jserver.loginserver.network.gameserverpackets.ChangeAccessLevel;
 import com.l2jserver.loginserver.network.gameserverpackets.ChangePassword;
@@ -104,7 +105,7 @@ public class L2JGameServerPacketHandler {
 						msg = new ReplyCharacters(data, server);
 						break;
 					case 0x09:
-						if (Configuration.getInstance().email().isEnabled()) {
+						if (email().isEnabled()) {
 							msg = new RequestSendMail(data);
 						}
 						break;
