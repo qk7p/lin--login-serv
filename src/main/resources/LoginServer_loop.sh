@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 err=1
 until [ $err == 0 ]; 
