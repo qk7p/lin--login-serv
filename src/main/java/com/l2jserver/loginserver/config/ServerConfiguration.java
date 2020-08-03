@@ -21,6 +21,8 @@ package com.l2jserver.loginserver.config;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static org.aeonbits.owner.Config.HotReloadType.ASYNC;
 
+import java.util.Set;
+
 import org.aeonbits.owner.Config;
 import org.aeonbits.owner.Config.HotReload;
 import org.aeonbits.owner.Config.Sources;
@@ -51,6 +53,9 @@ public interface ServerConfiguration extends Config {
 	
 	@Key("GameServerPort")
 	int getGameServerPort();
+	
+	@Key("ServerVersions")
+	Set<Integer> getServerVersions();
 	
 	@Key("LoginTryBeforeBan")
 	int getLoginTryBeforeBan();

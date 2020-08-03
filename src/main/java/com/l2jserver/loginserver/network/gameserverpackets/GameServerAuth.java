@@ -30,6 +30,7 @@ import com.l2jserver.commons.network.BaseRecievePacket;
 import com.l2jserver.loginserver.GameServerTable;
 import com.l2jserver.loginserver.GameServerTable.GameServerInfo;
 import com.l2jserver.loginserver.GameServerThread;
+import com.l2jserver.loginserver.model.GameServerVersion;
 import com.l2jserver.loginserver.network.L2JGameServerPacketHandler.GameServerState;
 import com.l2jserver.loginserver.network.loginserverpackets.AuthResponse;
 import com.l2jserver.loginserver.network.loginserverpackets.LoginServerFail;
@@ -38,18 +39,21 @@ import com.l2jserver.loginserver.network.loginserverpackets.LoginServerFail;
  * Game Server Auth packet.
  * 
  * <pre>
- * Format: cccddb
- * c desired ID
- * c accept alternative ID
- * c reserve Host
- * s ExternalHostName
- * s InetranlHostName
- * d max players
- * d hexid size
- * b hexid
+ * Format: CCCCHDDBD[S]
+ * C server version
+ * C desired ID
+ * C accept alternative ID
+ * C reserve Host
+ * H port
+ * D max players
+ * D hex Id size
+ * B hex Id
+ * D subnet size
+ * [S] subnets
  * </pre>
  * 
  * @author -Wooden-
+ * @author Zoey76
  * @version 2.6.1.0
  */
 public class GameServerAuth extends BaseRecievePacket {
@@ -69,6 +73,8 @@ public class GameServerAuth extends BaseRecievePacket {
 	
 	private final int _maxPlayers;
 	
+	private final int _serverVersion;
+	
 	private final int _port;
 	
 	private final String[] _hosts;
@@ -76,6 +82,7 @@ public class GameServerAuth extends BaseRecievePacket {
 	public GameServerAuth(byte[] decrypt, GameServerThread server) {
 		super(decrypt);
 		_server = server;
+		_serverVersion = readC();
 		_desiredId = readC();
 		_acceptAlternativeId = (readC() == 0 ? false : true);
 		_hostReserved = (readC() == 0 ? false : true);
@@ -94,17 +101,20 @@ public class GameServerAuth extends BaseRecievePacket {
 		}
 		
 		if (handleRegProcess()) {
-			AuthResponse ar = new AuthResponse(server.getGameServerInfo().getId());
-			server.sendPacket(ar);
-			if (server().isDebug()) {
-				LOG.info("Authed Id {}.", server.getGameServerInfo().getId());
-			}
+			server.sendPacket(new AuthResponse(server.getGameServerInfo().getId()));
+			LOG.info("Game Server {} enabled.", GameServerVersion.valueOf(_serverVersion));
+			
 			server.broadcastToTelnet("GameServer [" + server.getServerId() + "] " + ServerNameDAO.getServer(server.getServerId()) + " is connected");
 			server.setLoginConnectionState(GameServerState.AUTHED);
 		}
 	}
 	
 	private boolean handleRegProcess() {
+		if (!server().getServerVersions().contains(_serverVersion)) {
+			_server.forceClose(LoginServerFail.REASON_INVALID_GAME_SERVER_VERSION);
+			return false;
+		}
+		
 		GameServerTable gameServerTable = GameServerTable.getInstance();
 		
 		int id = _desiredId;
@@ -118,7 +128,7 @@ public class GameServerAuth extends BaseRecievePacket {
 				// check to see if this GS is already connected
 				synchronized (gsi) {
 					if (gsi.isAuthed()) {
-						_server.forceClose(LoginServerFail.REASON_ALREADY_LOGGED8IN);
+						_server.forceClose(LoginServerFail.REASON_ALREADY_LOGGED_IN);
 						return false;
 					}
 					_server.attachGameServerInfo(gsi, _port, _hosts, _maxPlayers);

@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 import com.l2jserver.loginserver.GameServerTable.GameServerInfo;
 import com.l2jserver.loginserver.LoginController;
 import com.l2jserver.loginserver.LoginController.AuthLoginResult;
-import com.l2jserver.loginserver.model.data.AccountInfo;
+import com.l2jserver.loginserver.model.AccountInfo;
 import com.l2jserver.loginserver.network.L2LoginClient;
 import com.l2jserver.loginserver.network.L2LoginClient.LoginClientState;
 import com.l2jserver.loginserver.network.serverpackets.AccountKicked;

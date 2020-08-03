@@ -19,22 +19,24 @@
 package com.l2jserver.loginserver.network.loginserverpackets;
 
 import com.l2jserver.commons.network.BaseSendablePacket;
-import com.l2jserver.loginserver.LoginServer;
 
 /**
+ * Initialize Login Server packet.
+ * 
+ * <pre>
+ * C ID 0x00
+ * D key size
+ * B key
+ * </pre>
+ * 
  * @author -Wooden-
+ * @author Zoey76
  * @version 2.6.1.0
  */
 public class InitLS extends BaseSendablePacket {
-	// ID 0x00
-	// format
-	// d proto rev
-	// d key size
-	// b key
 	
 	public InitLS(byte[] publickey) {
 		writeC(0x00);
-		writeD(LoginServer.PROTOCOL_REV);
 		writeD(publickey.length);
 		writeB(publickey);
 	}

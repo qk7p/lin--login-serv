@@ -90,9 +90,8 @@ public class GameServerThread extends Thread {
 			return;
 		}
 		
-		InitLS startPacket = new InitLS(_publicKey.getModulus().toByteArray());
 		try {
-			sendPacket(startPacket);
+			sendPacket(new InitLS(_publicKey.getModulus().toByteArray()));
 			
 			int lengthHi = 0;
 			int lengthLo = 0;
@@ -140,8 +139,8 @@ public class GameServerThread extends Thread {
 			}
 		} catch (IOException ex) {
 			final var serverName = (getServerId() != -1 ? "[" + getServerId() + "] " + ServerNameDAO.getServer(getServerId()) : "(" + _connectionIPAddress + ")");
-			LOG.info("Game Server {} lost connection!", serverName);
-			broadcastToTelnet("Game Server " + serverName + "lost connection!");
+			LOG.warn("Game Server {} lost connection!", serverName);
+			broadcastToTelnet("Game Server " + serverName + " lost connection!");
 		} finally {
 			if (isAuthed()) {
 				_gsi.setDown();
@@ -162,7 +161,7 @@ public class GameServerThread extends Thread {
 	}
 	
 	/**
-	 * Attachs a GameServerInfo to this Thread<br>
+	 * Attaches a GameServerInfo to this Thread<br>
 	 * <ul>
 	 * <li>Updates the GameServerInfo values based on GameServerAuth packet</li>
 	 * <li><b>Sets the GameServerInfo as Authed</b></li>
@@ -284,9 +283,6 @@ public class GameServerThread extends Thread {
 		return _gsi;
 	}
 	
-	/**
-	 * @return Returns the connectionIpAddress.
-	 */
 	public String getConnectionIpAddress() {
 		return _connectionIPAddress;
 	}

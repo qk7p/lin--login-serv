@@ -52,8 +52,6 @@ public final class LoginServer {
 	
 	private static final String BANNED_IPS = "/config/banned_ip.cfg";
 	
-	public static final int PROTOCOL_REV = 0x0106;
-	
 	private static LoginServer _instance;
 	
 	private GameServerListener _gameServerListener;

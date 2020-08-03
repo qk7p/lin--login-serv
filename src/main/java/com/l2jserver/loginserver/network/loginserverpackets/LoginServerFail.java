@@ -26,6 +26,8 @@ import com.l2jserver.commons.network.BaseSendablePacket;
  */
 public class LoginServerFail extends BaseSendablePacket {
 	
+	public static final int REASON_INVALID_GAME_SERVER_VERSION = 0;
+	
 	public static final int REASON_IP_BANNED = 1;
 	
 	public static final int REASON_IP_RESERVED = 2;
@@ -38,7 +40,7 @@ public class LoginServerFail extends BaseSendablePacket {
 	
 	public static final int NOT_AUTHED = 6;
 	
-	public static final int REASON_ALREADY_LOGGED8IN = 7;
+	public static final int REASON_ALREADY_LOGGED_IN = 7;
 	
 	public LoginServerFail(int reason) {
 		writeC(0x01);
