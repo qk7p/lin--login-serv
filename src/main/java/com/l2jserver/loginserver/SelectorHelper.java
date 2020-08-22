@@ -30,10 +30,10 @@ import org.slf4j.LoggerFactory;
 import com.l2jserver.commons.util.IPv4Filter;
 import com.l2jserver.loginserver.network.L2LoginClient;
 import com.l2jserver.loginserver.network.serverpackets.Init;
-import com.l2jserver.mmocore.IAcceptFilter;
-import com.l2jserver.mmocore.IClientFactory;
-import com.l2jserver.mmocore.IMMOExecutor;
+import com.l2jserver.mmocore.AcceptFilter;
+import com.l2jserver.mmocore.ClientFactory;
 import com.l2jserver.mmocore.MMOConnection;
+import com.l2jserver.mmocore.MMOExecutor;
 import com.l2jserver.mmocore.ReceivablePacket;
 
 /**
@@ -42,7 +42,7 @@ import com.l2jserver.mmocore.ReceivablePacket;
  * @author Zoey76
  * @version 2.6.1.0
  */
-public class SelectorHelper implements IMMOExecutor<L2LoginClient>, IClientFactory<L2LoginClient>, IAcceptFilter {
+public class SelectorHelper implements MMOExecutor<L2LoginClient>, ClientFactory<L2LoginClient>, AcceptFilter {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(SelectorHelper.class);
 	
@@ -51,7 +51,7 @@ public class SelectorHelper implements IMMOExecutor<L2LoginClient>, IClientFacto
 	private final IPv4Filter _ipv4filter;
 	
 	public SelectorHelper() {
-		_generalPacketsThreadPool = new ThreadPoolExecutor(4, 6, 15L, SECONDS, new LinkedBlockingQueue<Runnable>());
+		_generalPacketsThreadPool = new ThreadPoolExecutor(4, 6, 15L, SECONDS, new LinkedBlockingQueue<>());
 		_ipv4filter = new IPv4Filter();
 	}
 	

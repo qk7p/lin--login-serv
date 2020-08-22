@@ -513,7 +513,7 @@ public final class GameServerTable {
 		/**
 		 * The Class GameServerAddress.
 		 */
-		private class GameServerAddress extends IPSubnet {
+		private static class GameServerAddress extends IPSubnet {
 			private final String _serverAddress;
 			
 			/**

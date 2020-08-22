@@ -94,7 +94,7 @@ public interface ServerConfiguration extends Config {
 	boolean isDebug();
 	
 	@Key("LoginRestartSchedule")
-	boolean isLoginRestatEnabled();
+	boolean isLoginRestartEnabled();
 	
 	@Key("LoginRestartTime")
 	int getLoginRestartTime();

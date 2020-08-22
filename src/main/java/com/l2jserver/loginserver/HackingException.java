@@ -23,8 +23,11 @@ package com.l2jserver.loginserver;
  * @version 2.6.1.0
  */
 public class HackingException extends Exception {
+	
 	private static final long serialVersionUID = 4050762693478463029L;
-	String _ip;
+	
+	private final String _ip;
+	
 	private final int _connects;
 	
 	public HackingException(String ip, int connects) {

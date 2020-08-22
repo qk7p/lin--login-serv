@@ -48,7 +48,7 @@ public class RequestTempBan extends BaseRecievePacket {
 		_accountName = readS();
 		_ip = readS();
 		_banTime = readQ();
-		boolean haveReason = readC() == 0 ? false : true;
+		boolean haveReason = readC() != 0;
 		if (haveReason) {
 			_banReason = readS();
 		}

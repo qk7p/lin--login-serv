@@ -78,7 +78,7 @@ public class RequestAuthLogin extends L2LoginClientPacket {
 	
 	@Override
 	public void run() {
-		byte[] decrypted = null;
+		byte[] decrypted;
 		final L2LoginClient client = getClient();
 		try {
 			final Cipher rsaCipher = Cipher.getInstance("RSA/ECB/nopadding");
@@ -104,7 +104,7 @@ public class RequestAuthLogin extends L2LoginClientPacket {
 		InetAddress clientAddr = getClient().getConnection().getInetAddress();
 		
 		final LoginController lc = LoginController.getInstance();
-		AccountInfo info = lc.retriveAccountInfo(clientAddr, _user, _password);
+		AccountInfo info = lc.retrieveAccountInfo(clientAddr, _user, _password);
 		if (info == null) {
 			// user or pass wrong
 			client.close(LoginFailReason.REASON_USER_OR_PASS_WRONG);

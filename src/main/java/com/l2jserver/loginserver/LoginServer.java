@@ -60,8 +60,6 @@ public final class LoginServer {
 	
 	private Status _statusServer;
 	
-	private Thread _restartLoginServer;
-	
 	public static void main(String[] args) {
 		new LoginServer();
 	}
@@ -193,10 +191,10 @@ public final class LoginServer {
 		}
 		LOG.info("Loaded {} banned IPs.", LoginController.getInstance().getBannedIps().size());
 		
-		if (server().isLoginRestatEnabled()) {
-			_restartLoginServer = new LoginServerRestart();
-			_restartLoginServer.setDaemon(true);
-			_restartLoginServer.start();
+		if (server().isLoginRestartEnabled()) {
+			final var restartLoginServer = new LoginServerRestart();
+			restartLoginServer.setDaemon(true);
+			restartLoginServer.start();
 			LOG.info("Scheduled restart after {} hours.", server().getLoginRestartTime());
 		}
 	}

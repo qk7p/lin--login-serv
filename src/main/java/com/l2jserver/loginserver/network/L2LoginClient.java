@@ -51,7 +51,7 @@ public final class L2LoginClient extends MMOClient<MMOConnection<L2LoginClient>>
 	
 	private static final Logger LOG = LoggerFactory.getLogger(L2LoginClient.class);
 	
-	public static enum LoginClientState {
+	public enum LoginClientState {
 		CONNECTED,
 		AUTHED_GG,
 		AUTHED_LOGIN
@@ -96,10 +96,8 @@ public final class L2LoginClient extends MMOClient<MMOConnection<L2LoginClient>>
 	
 	@Override
 	public boolean decrypt(ByteBuffer buf, int size) {
-		boolean isChecksumValid = false;
 		try {
-			isChecksumValid = _loginCrypt.decrypt(buf.array(), buf.position(), size);
-			if (!isChecksumValid) {
+			if (!_loginCrypt.decrypt(buf.array(), buf.position(), size)) {
 				LOG.warn("Wrong checksum from client {}!", toString());
 				super.getConnection().close((SendablePacket<L2LoginClient>) null);
 				return false;

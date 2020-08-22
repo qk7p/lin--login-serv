@@ -28,7 +28,7 @@ import com.l2jserver.loginserver.network.clientpackets.AuthGameGuard;
 import com.l2jserver.loginserver.network.clientpackets.RequestAuthLogin;
 import com.l2jserver.loginserver.network.clientpackets.RequestServerList;
 import com.l2jserver.loginserver.network.clientpackets.RequestServerLogin;
-import com.l2jserver.mmocore.IPacketHandler;
+import com.l2jserver.mmocore.PacketHandler;
 import com.l2jserver.mmocore.ReceivablePacket;
 
 /**
@@ -36,7 +36,7 @@ import com.l2jserver.mmocore.ReceivablePacket;
  * @author KenM
  * @version 2.6.1.0
  */
-public final class L2LoginPacketHandler implements IPacketHandler<L2LoginClient> {
+public final class L2LoginPacketHandler implements PacketHandler<L2LoginClient> {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(L2LoginPacketHandler.class);
 	

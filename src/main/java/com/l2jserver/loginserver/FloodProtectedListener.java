@@ -40,7 +40,7 @@ public abstract class FloodProtectedListener extends Thread {
 	
 	private final Map<String, ForeignConnection> _floodProtection = new ConcurrentHashMap<>();
 	
-	private ServerSocket _serverSocket;
+	private final ServerSocket _serverSocket;
 	
 	public FloodProtectedListener(String listenIp, int port) throws Exception {
 		if (listenIp.equals("*")) {
@@ -52,7 +52,7 @@ public abstract class FloodProtectedListener extends Thread {
 	
 	@Override
 	public void run() {
-		Socket connection = null;
+		Socket connection;
 		while (!isInterrupted()) {
 			try {
 				connection = _serverSocket.accept();

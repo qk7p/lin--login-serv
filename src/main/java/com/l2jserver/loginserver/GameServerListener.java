@@ -30,7 +30,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @version 2.6.1.0
  */
 public class GameServerListener extends FloodProtectedListener {
-	private static List<GameServerThread> _gameServers = new CopyOnWriteArrayList<>();
+	private static final List<GameServerThread> _gameServers = new CopyOnWriteArrayList<>();
 	
 	public GameServerListener() throws Exception {
 		super(server().getGameServerHost(), server().getGameServerPort());

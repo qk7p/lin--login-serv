@@ -23,7 +23,7 @@ package com.l2jserver.loginserver.network.serverpackets;
  * @version 2.6.1.0
  */
 public final class AccountKicked extends L2LoginServerPacket {
-	public static enum AccountKickedReason {
+	public enum AccountKickedReason {
 		REASON_DATA_STEALER(0x01),
 		REASON_GENERIC_VIOLATION(0x08),
 		REASON_7_DAYS_SUSPENDED(0x10),

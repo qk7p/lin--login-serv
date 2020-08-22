@@ -62,7 +62,7 @@ public class BlowFishKey extends BaseRecievePacket {
 			
 			server.SetBlowFish(new NewCrypt(key));
 			if (server().isDebug()) {
-				LOG.info("New BlowFish key received, Blowfih Engine initialized:");
+				LOG.info("New BlowFish key received, Blowfish Engine initialized:");
 			}
 			server.setLoginConnectionState(BF_CONNECTED);
 		} catch (Exception ex) {

@@ -93,10 +93,10 @@ public class GameServerThread extends Thread {
 		try {
 			sendPacket(new InitLS(_publicKey.getModulus().toByteArray()));
 			
-			int lengthHi = 0;
-			int lengthLo = 0;
-			int length = 0;
-			boolean checksumOk = false;
+			int lengthHi;
+			int lengthLo;
+			int length;
+			boolean checksumOk;
 			for (;;) {
 				lengthLo = _in.read();
 				lengthHi = _in.read();

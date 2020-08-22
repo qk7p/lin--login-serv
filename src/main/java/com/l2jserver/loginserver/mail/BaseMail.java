@@ -48,7 +48,7 @@ public class BaseMail implements Runnable {
 	
 	private MimeMessage _messageMime = null;
 	
-	private class SmtpAuthenticator extends Authenticator {
+	private static class SmtpAuthenticator extends Authenticator {
 		private final PasswordAuthentication _auth;
 		
 		public SmtpAuthenticator() {
@@ -111,9 +111,9 @@ public class BaseMail implements Runnable {
 		try (var con = ConnectionFactory.getInstance().getConnection();
 			var statement = con.prepareStatement(email().getSelectQuery())) {
 			statement.setString(1, username);
-			try (var rset = statement.executeQuery()) {
-				if (rset.next()) {
-					return rset.getString(email().getDatabaseField());
+			try (var rs = statement.executeQuery()) {
+				if (rs.next()) {
+					return rs.getString(email().getDatabaseField());
 				}
 			}
 		} catch (Exception ex) {

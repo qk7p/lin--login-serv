@@ -60,7 +60,7 @@ public class GameServerAuth extends BaseRecievePacket {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(GameServerAuth.class);
 	
-	private GameServerThread _server;
+	private final GameServerThread _server;
 	
 	private final byte[] _hexId;
 	
@@ -84,8 +84,8 @@ public class GameServerAuth extends BaseRecievePacket {
 		_server = server;
 		_serverVersion = readC();
 		_desiredId = readC();
-		_acceptAlternativeId = (readC() == 0 ? false : true);
-		_hostReserved = (readC() == 0 ? false : true);
+		_acceptAlternativeId = (readC() != 0);
+		_hostReserved = (readC() != 0);
 		_port = readH();
 		_maxPlayers = readD();
 		int size = readD();

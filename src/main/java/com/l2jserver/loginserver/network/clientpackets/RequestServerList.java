@@ -36,23 +36,14 @@ public class RequestServerList extends L2LoginClientPacket {
 	private int _skey2;
 	private int _data3;
 	
-	/**
-	 * @return
-	 */
 	public int getSessionKey1() {
 		return _skey1;
 	}
 	
-	/**
-	 * @return
-	 */
 	public int getSessionKey2() {
 		return _skey2;
 	}
 	
-	/**
-	 * @return
-	 */
 	public int getData3() {
 		return _data3;
 	}

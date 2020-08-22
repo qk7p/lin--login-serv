@@ -27,10 +27,10 @@ import com.l2jserver.loginserver.network.L2LoginClient;
  * d: protocol revision
  * b: 0x90 bytes : 0x80 bytes for the scrambled RSA public key
  *                 0x10 bytes at 0x00
- * d: unknow
- * d: unknow
- * d: unknow
- * d: unknow
+ * d: unknown
+ * d: unknown
+ * d: unknown
+ * d: unknown
  * s: blowfish key
  * </pre>
  * 

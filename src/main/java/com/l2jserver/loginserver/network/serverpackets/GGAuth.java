@@ -19,7 +19,7 @@
 package com.l2jserver.loginserver.network.serverpackets;
 
 /**
- * Fromat: d d: response
+ * Format: d d: response
  * @version 2.6.1.0
  */
 public final class GGAuth extends L2LoginServerPacket {

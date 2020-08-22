@@ -70,7 +70,7 @@ public final class ServerList extends L2LoginServerPacket {
 	private final Map<Integer, Integer> _charsOnServers;
 	private final Map<Integer, long[]> _charsToDelete;
 	
-	class ServerData {
+	static class ServerData {
 		protected byte[] _ip;
 		protected int _port;
 		protected int _ageLimit;
