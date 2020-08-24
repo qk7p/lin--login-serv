@@ -20,11 +20,13 @@ package com.l2jserver.loginserver.config;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static org.aeonbits.owner.Config.HotReloadType.ASYNC;
+import static org.aeonbits.owner.Config.LoadType.MERGE;
 
 import java.util.Set;
 
 import org.aeonbits.owner.Config;
 import org.aeonbits.owner.Config.HotReload;
+import org.aeonbits.owner.Config.LoadPolicy;
 import org.aeonbits.owner.Config.Sources;
 
 /**
@@ -33,9 +35,11 @@ import org.aeonbits.owner.Config.Sources;
  * @version 2.6.1.1
  */
 @Sources({
+	"file:${L2J_HOME}/custom/login/config/server.properties",
 	"file:./config/server.properties",
 	"classpath:config/server.properties"
 })
+@LoadPolicy(MERGE)
 @HotReload(value = 20, unit = MINUTES, type = ASYNC)
 public interface ServerConfiguration extends Config {
 	

@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.l2jserver</groupId>
 	<artifactId>l2j-server-login</artifactId>
-	<version>2.6.3.0</version>
+	<version>2.6.3.1</version>
 	<name>L2J Login Server</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -14,7 +14,7 @@
 		<log4j.version>2.13.3</log4j.version>
 		<javax.mail-api.version>1.6.2</javax.mail-api.version>
 		<owner.version>1.0.12</owner.version>
-		<l2j-server-commons.version>2.6.3.0</l2j-server-commons.version>
+		<l2j-server-commons.version>2.6.4.0</l2j-server-commons.version>
 		<!-- Plugins -->
 		<maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
 		<maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>

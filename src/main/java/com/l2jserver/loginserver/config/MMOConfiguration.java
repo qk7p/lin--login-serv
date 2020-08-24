@@ -20,9 +20,11 @@ package com.l2jserver.loginserver.config;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static org.aeonbits.owner.Config.HotReloadType.ASYNC;
+import static org.aeonbits.owner.Config.LoadType.MERGE;
 
 import org.aeonbits.owner.Config;
 import org.aeonbits.owner.Config.HotReload;
+import org.aeonbits.owner.Config.LoadPolicy;
 import org.aeonbits.owner.Config.Sources;
 
 /**
@@ -31,9 +33,11 @@ import org.aeonbits.owner.Config.Sources;
  * @version 2.6.1.1
  */
 @Sources({
+	"file:${L2J_HOME}/custom/login/config/mmo.properties",
 	"file:./config/mmo.properties",
 	"classpath:config/mmo.properties"
 })
+@LoadPolicy(MERGE)
 @HotReload(value = 20, unit = MINUTES, type = ASYNC)
 public interface MMOConfiguration extends Config {
 	
