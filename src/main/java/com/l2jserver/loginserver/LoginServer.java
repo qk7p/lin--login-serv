@@ -73,11 +73,9 @@ public final class LoginServer {
 		
 		// Prepare Database
 		ConnectionFactory.builder() //
-			.withDriver(database().getDriver()) //
 			.withUrl(database().getURL()) //
 			.withUser(database().getUser()) //
 			.withPassword(database().getPassword()) //
-			.withConnectionPool(database().getConnectionPool()) //
 			.withMaxIdleTime(database().getMaxIdleTime()) //
 			.withMaxPoolSize(database().getMaxConnections()) //
 			.build();

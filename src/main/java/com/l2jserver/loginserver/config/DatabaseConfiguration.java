@@ -41,9 +41,6 @@ import org.aeonbits.owner.Config.Sources;
 @HotReload(value = 20, unit = MINUTES, type = ASYNC)
 public interface DatabaseConfiguration extends Config {
 	
-	@Key("Driver")
-	String getDriver();
-	
 	@Key("URL")
 	String getURL();
 	
@@ -52,9 +49,6 @@ public interface DatabaseConfiguration extends Config {
 	
 	@Key("Password")
 	String getPassword();
-	
-	@Key("ConnectionPool")
-	String getConnectionPool();
 	
 	@Key("MaxConnections")
 	Integer getMaxConnections();
