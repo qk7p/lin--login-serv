@@ -2,14 +2,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.l2jserver</groupId>
 	<artifactId>l2j-server-login</artifactId>
-	<version>2.6.4.0</version>
+	<version>2.6.5.0</version>
 	<name>L2J Login Server</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compiler.source>16</maven.compiler.source>
-		<maven.compiler.target>16</maven.compiler.target>
-		<slf4j.version>1.7.31</slf4j.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<slf4j.version>1.7.32</slf4j.version>
 		<log4j.version>2.14.1</log4j.version>
 		<javax.mail-api.version>1.6.2</javax.mail-api.version>
 		<owner.version>1.0.12</owner.version>
