@@ -125,6 +125,7 @@ public class RequestAuthLogin extends L2LoginClientPacket {
 				}
 			}
 			case INVALID_PASSWORD -> client.close(LoginFailReason.REASON_USER_OR_PASS_WRONG);
+			case ACCOUNT_INACTIVE -> client.close(LoginFailReason.REASON_INACTIVE);
 			case ACCOUNT_BANNED -> {
 				client.close(new AccountKicked(AccountKickedReason.REASON_PERMANENTLY_BANNED));
 			}

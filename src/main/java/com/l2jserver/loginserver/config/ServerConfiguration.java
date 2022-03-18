@@ -85,11 +85,17 @@ public interface ServerConfiguration extends Config {
 	@Key("MaxConnectionPerIP")
 	int getMaxConnectionPerIP();
 	
+	@Key("AccountInactiveAccessLevel")
+	int getAccountInactiveAccessLevel();
+
 	@Key("ShowLicence")
 	boolean showLicense();
 	
 	@Key("AutoCreateAccounts")
 	boolean autoCreateAccounts();
+	
+	@Key("AutoCreateAccountsAccessLevel")
+	int autoCreateAccountsAccessLevel();
 	
 	@Key("DatapackRoot")
 	String getDatapackRoot();

@@ -213,7 +213,7 @@ public class LoginController {
 				ps.setString(1, login);
 				ps.setString(2, hashBase64);
 				ps.setLong(3, System.currentTimeMillis());
-				ps.setInt(4, 0);
+				ps.setInt(4, server().autoCreateAccountsAccessLevel());
 				ps.setString(5, addr.getHostAddress());
 				ps.execute();
 			} catch (Exception ex) {
@@ -231,6 +231,9 @@ public class LoginController {
 	
 	public AuthLoginResult tryCheckinAccount(L2LoginClient client, InetAddress address, AccountInfo info) {
 		if (info.getAccessLevel() < 0) {
+		    if (info.getAccessLevel() == server().autoCreateAccountsAccessLevel()) {
+		        return AuthLoginResult.ACCOUNT_INACTIVE;
+		    }
 			return AuthLoginResult.ACCOUNT_BANNED;
 		}
 		
@@ -530,6 +533,7 @@ public class LoginController {
 	
 	public enum AuthLoginResult {
 		INVALID_PASSWORD,
+		ACCOUNT_INACTIVE,
 		ACCOUNT_BANNED,
 		ALREADY_ON_LS,
 		ALREADY_ON_GS,
