@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.l2jserver</groupId>
 	<artifactId>l2j-server-login</artifactId>
-	<version>2.6.6.1</version>
+	<version>2.6.6.2</version>
 	<name>L2J Login Server</name>
 	<description>L2J Login Server handles the game client authentication and login.</description>
 	<url>https://bitbucket.org/l2jserver/l2j-server-login/</url>
@@ -11,12 +11,13 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
-		<log4j.version>2.20.0</log4j.version>
+		<log4j.version>2.21.1</log4j.version>
 		<jakarta.mail-api.version>2.1.2</jakarta.mail-api.version>
 		<owner.version>1.0.12</owner.version>
 		<!-- L2J -->
-		<l2j-server-commons.version>2.6.6.3</l2j-server-commons.version>
+		<l2j-server-commons.version>2.6.6.4</l2j-server-commons.version>
 		<!-- Plugins -->
+		<dependency-check-maven.version>8.4.3</dependency-check-maven.version>
 		<maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
 		<maven-assembly-plugin.version>3.6.0</maven-assembly-plugin.version>
 	</properties>
@@ -98,6 +99,22 @@
 								<descriptor>src/main/assembly/zip.xml</descriptor>
 							</descriptors>
 						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>${dependency-check-maven.version}</version>
+				<configuration>
+					<failBuildOnCVSS>8</failBuildOnCVSS>
+					<assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
