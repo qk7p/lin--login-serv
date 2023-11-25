@@ -69,7 +69,7 @@ public final class LoginStatusThread extends Thread {
 		
 		telnetOutput(1, "Connection from: " + clientStringIP);
 		
-		// read and loop thru list of IPs, compare with newIP
+		// read and loop through a list of IPs, compare with them to the newIP
 		if (server().isDebug()) {
 			telnetOutput(2, "");
 		}
@@ -151,7 +151,7 @@ public final class LoginStatusThread extends Thread {
 					_print.println("The following is a list of all available commands: ");
 					_print.println("help                - shows this help.");
 					_print.println("status              - displays basic server statistics.");
-					_print.println("unblock <ip>        - removes <ip> from banlist.");
+					_print.println("unblock <ip>        - removes <ip> from the ban list.");
 					_print.println("shutdown            - shuts down server.");
 					_print.println("restart             - restarts the server.");
 					_print.println("RedirectLogger      - Telnet will give you some info about server in real time.");

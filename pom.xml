@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.l2jserver</groupId>
 	<artifactId>l2j-server-login</artifactId>
-	<version>2.6.6.2</version>
+	<version>2.6.6.3</version>
 	<name>L2J Login Server</name>
 	<description>L2J Login Server handles the game client authentication and login.</description>
 	<url>https://bitbucket.org/l2jserver/l2j-server-login/</url>
@@ -24,7 +24,7 @@
 	<licenses>
 		<license>
 			<name>GPL 3.0</name>
-			<url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+			<url>https://www.gnu.org/licenses/gpl-3.0.html</url>
 		</license>
 	</licenses>
 	<organization>

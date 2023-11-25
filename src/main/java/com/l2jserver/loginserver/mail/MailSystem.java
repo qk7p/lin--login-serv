@@ -65,7 +65,7 @@ public class MailSystem {
 			LOG.warn("Cannot load email system - Missing file MailList.xml");
 			return;
 		}
-
+		
 		Document doc;
 		try {
 			doc = factory.newDocumentBuilder().parse(file);

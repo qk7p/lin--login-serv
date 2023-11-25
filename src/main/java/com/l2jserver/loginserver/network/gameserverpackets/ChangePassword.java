@@ -49,8 +49,8 @@ public class ChangePassword extends BaseRecievePacket {
 		
 		String accountName = readS();
 		String characterName = readS();
-		String curpass = readS();
-		String newpass = readS();
+		String currentPassword = readS();
+		String newPassword = readS();
 		
 		for (GameServerInfo gsi : GameServerTable.getInstance().getRegisteredGameServers().values()) {
 			if ((gsi.getGameServerThread() != null) && gsi.getGameServerThread().hasAccountOnGameServer(accountName)) {
@@ -62,13 +62,13 @@ public class ChangePassword extends BaseRecievePacket {
 			return;
 		}
 		
-		if ((curpass == null) || (newpass == null)) {
+		if ((currentPassword == null) || (newPassword == null)) {
 			gst.ChangePasswordResponse((byte) 0, characterName, "Invalid password data! Try again.");
 		} else {
 			try {
 				final var md = MessageDigest.getInstance("SHA");
-				final var raw = md.digest(curpass.getBytes(UTF_8));
-				String curpassEnc = Base64.getEncoder().encodeToString(raw);
+				final var raw = md.digest(currentPassword.getBytes(UTF_8));
+				String currentPasswordEnc = Base64.getEncoder().encodeToString(raw);
 				String pass = null;
 				int passUpdated;
 				
@@ -82,8 +82,8 @@ public class ChangePassword extends BaseRecievePacket {
 					}
 				}
 				
-				if (curpassEnc.equals(pass)) {
-					final var password = md.digest(newpass.getBytes(UTF_8));
+				if (currentPasswordEnc.equals(pass)) {
+					final var password = md.digest(newPassword.getBytes(UTF_8));
 					final var newPasswordEnc = Base64.getEncoder().encodeToString(password);
 					try (var con = ConnectionFactory.getInstance().getConnection();
 						var ps = con.prepareStatement("UPDATE accounts SET password=? WHERE login=?")) {
@@ -92,7 +92,7 @@ public class ChangePassword extends BaseRecievePacket {
 						passUpdated = ps.executeUpdate();
 					}
 					
-					LOG.info("The password for account {} has been changed from {} to {}.", accountName, curpassEnc, newPasswordEnc);
+					LOG.info("The password for account {} has been changed from {} to {}.", accountName, currentPasswordEnc, newPasswordEnc);
 					if (passUpdated > 0) {
 						gst.ChangePasswordResponse((byte) 1, characterName, "You have successfully changed your password!");
 					} else {

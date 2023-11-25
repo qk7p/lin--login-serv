@@ -98,7 +98,7 @@ public final class GameServerTable {
 	
 	/**
 	 * Gets the registered game server by id.
-	 * @param id the game server Id
+	 * @param id the game server ID
 	 * @return the registered game server by id
 	 */
 	public GameServerInfo getRegisteredGameServerById(int id) {
@@ -173,7 +173,7 @@ public final class GameServerTable {
 			ps.setString(3, externalHost);
 			ps.executeUpdate();
 		} catch (Exception e) {
-			LOG.error("{}: Error while saving gameserver!", getClass().getSimpleName(), e);
+			LOG.error("{}: Error while saving game server!", getClass().getSimpleName(), e);
 		}
 	}
 	
@@ -218,7 +218,7 @@ public final class GameServerTable {
 		private GameServerThread _gst;
 		private int _status;
 		// network
-		private final ArrayList<GameServerAddress> _addrs = new ArrayList<>(5);
+		private final ArrayList<GameServerAddress> _addresses = new ArrayList<>(5);
 		private int _port;
 		// config
 		private final boolean _isPvp = true;
@@ -442,8 +442,8 @@ public final class GameServerTable {
 		}
 		
 		/**
-		 * Checks if is showing brackets.
-		 * @return true, if is showing brackets
+		 * Checks if it is showing brackets.
+		 * @return true, if it is showing brackets
 		 */
 		public boolean isShowingBrackets() {
 			return _isShowingBrackets;
@@ -466,7 +466,7 @@ public final class GameServerTable {
 		 * @throws UnknownHostException the unknown host exception
 		 */
 		public void addServerAddress(String subnet, String addr) throws UnknownHostException {
-			_addrs.add(new GameServerAddress(subnet, addr));
+			_addresses.add(new GameServerAddress(subnet, addr));
 		}
 		
 		/**
@@ -475,12 +475,12 @@ public final class GameServerTable {
 		 * @return the server address
 		 */
 		public String getServerAddress(InetAddress addr) {
-			for (GameServerAddress a : _addrs) {
+			for (GameServerAddress a : _addresses) {
 				if (a.equals(addr)) {
 					return a.getServerAddress();
 				}
 			}
-			return null; // should not happens
+			return null; // should not happen
 		}
 		
 		/**
@@ -488,9 +488,9 @@ public final class GameServerTable {
 		 * @return the server addresses
 		 */
 		public String[] getServerAddresses() {
-			String[] result = new String[_addrs.size()];
+			String[] result = new String[_addresses.size()];
 			for (int i = 0; i < result.length; i++) {
-				result[i] = _addrs.get(i).toString();
+				result[i] = _addresses.get(i).toString();
 			}
 			
 			return result;
@@ -500,7 +500,7 @@ public final class GameServerTable {
 		 * Clear server addresses.
 		 */
 		public void clearServerAddresses() {
-			_addrs.clear();
+			_addresses.clear();
 		}
 		
 		/**

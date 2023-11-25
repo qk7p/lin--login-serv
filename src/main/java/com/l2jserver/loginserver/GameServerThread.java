@@ -84,7 +84,7 @@ public class GameServerThread extends Thread {
 	@Override
 	public void run() {
 		_connectionIPAddress = _connection.getInetAddress().getHostAddress();
-		if (GameServerThread.isBannedGameserverIP(_connectionIPAddress)) {
+		if (GameServerThread.isBannedGameServerIP(_connectionIPAddress)) {
 			LOG.warn("IP Address {} is on banned IP list.", _connectionIPAddress);
 			forceClose(REASON_IP_BANNED);
 			return;
@@ -167,9 +167,9 @@ public class GameServerThread extends Thread {
 	 * <li><b>Sets the GameServerInfo as Authed</b></li>
 	 * </ul>
 	 * @param gsi The GameServerInfo to be attached.
-	 * @param port
-	 * @param hosts
-	 * @param maxPlayers
+	 * @param port the port
+	 * @param hosts the hosts
+	 * @param maxPlayers the maximum amount of players
 	 */
 	public void attachGameServerInfo(GameServerInfo gsi, int port, String[] hosts, int maxPlayers) {
 		setGameServerInfo(gsi);
@@ -190,7 +190,7 @@ public class GameServerThread extends Thread {
 		}
 	}
 	
-	public static boolean isBannedGameserverIP(String ipAddress) {
+	public static boolean isBannedGameServerIP(String ipAddress) {
 		return false;
 	}
 	
@@ -252,7 +252,7 @@ public class GameServerThread extends Thread {
 	}
 	
 	public void setGameHosts(String[] hosts) {
-		LOG.info("Updated game server {}[{}] IP's.", ServerNameDAO.getServer(getServerId()), getServerId());
+		LOG.info("Updated game server {}[{}] IPs.", ServerNameDAO.getServer(getServerId()), getServerId());
 		
 		_gsi.clearServerAddresses();
 		for (int i = 0; i < hosts.length; i += 2) {

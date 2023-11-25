@@ -87,7 +87,7 @@ public interface ServerConfiguration extends Config {
 	
 	@Key("AccountInactiveAccessLevel")
 	int getAccountInactiveAccessLevel();
-
+	
 	@Key("ShowLicence")
 	boolean showLicense();
 	

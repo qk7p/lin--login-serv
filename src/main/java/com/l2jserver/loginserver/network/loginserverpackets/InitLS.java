@@ -35,10 +35,10 @@ import com.l2jserver.commons.network.BaseSendablePacket;
  */
 public class InitLS extends BaseSendablePacket {
 	
-	public InitLS(byte[] publickey) {
+	public InitLS(byte[] publicKey) {
 		writeC(0x00);
-		writeD(publickey.length);
-		writeB(publickey);
+		writeD(publicKey.length);
+		writeB(publicKey);
 	}
 	
 	@Override

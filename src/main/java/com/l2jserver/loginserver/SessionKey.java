@@ -21,8 +21,8 @@ package com.l2jserver.loginserver;
 import static com.l2jserver.loginserver.config.Configuration.server;
 
 /**
- * This class is used to represent session keys used by the client to authenticate in the gameserver.<br>
- * A SessionKey is made up of two 8 bytes keys. One is send in the {@link com.l2jserver.loginserver.network.serverpackets.LoginOk#LoginOk} packet and the other is sent in {@link com.l2jserver.loginserver.network.serverpackets.PlayOk#PlayOk}
+ * This class is used to represent session keys used by the client to authenticate in the game server.<br>
+ * A SessionKey is made up of two 8 bytes keys. One is sent in the {@link com.l2jserver.loginserver.network.serverpackets.LoginOk#LoginOk} packet and the other is sent in {@link com.l2jserver.loginserver.network.serverpackets.PlayOk#PlayOk}
  * @author -Wooden-
  * @version 2.6.1.0
  */
@@ -50,18 +50,17 @@ public class SessionKey {
 	
 	/**
 	 * Only checks the PlayOk part of the session key if server doesn't show the license when player logs in.
-	 * @param o
+	 * @param other the other session key to validate
 	 * @return true if keys are equal.
 	 */
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+	public boolean equals(Object other) {
+		if (this == other) {
 			return true;
 		}
-		if (!(o instanceof SessionKey)) {
+		if (!(other instanceof SessionKey key)) {
 			return false;
 		}
-		final SessionKey key = (SessionKey) o;
 		// when server doesn't show license it doesn't send the LoginOk packet, client doesn't have this part of the key then.
 		if (server().showLicense()) {
 			return ((playOkID1 == key.playOkID1) && (loginOkID1 == key.loginOkID1) && (playOkID2 == key.playOkID2) && (loginOkID2 == key.loginOkID2));

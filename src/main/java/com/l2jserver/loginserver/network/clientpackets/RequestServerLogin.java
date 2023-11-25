@@ -67,7 +67,7 @@ public class RequestServerLogin extends L2LoginClientPacket {
 	@Override
 	public void run() {
 		SessionKey sk = getClient().getSessionKey();
-		// if we didn't showed the license we can't check these values
+		// if we didn't show the license we can't check these values
 		if (!server().showLicense() || sk.checkLoginPair(_skey1, _skey2)) {
 			if (LoginController.getInstance().isLoginPossible(getClient(), _serverId)) {
 				getClient().setJoinedGS(true);

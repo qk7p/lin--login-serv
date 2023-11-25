@@ -40,7 +40,7 @@ import com.l2jserver.loginserver.network.serverpackets.LoginOk;
 import com.l2jserver.loginserver.network.serverpackets.ServerList;
 
 /**
- * Format: x 0 (a leading null) x: the rsa encrypted block with the login an password.
+ * Format: x 0 (a leading null) x: the rsa encrypted block with the login and password.
  * @version 2.6.1.0
  */
 public class RequestAuthLogin extends L2LoginClientPacket {
@@ -126,9 +126,7 @@ public class RequestAuthLogin extends L2LoginClientPacket {
 			}
 			case INVALID_PASSWORD -> client.close(LoginFailReason.REASON_USER_OR_PASS_WRONG);
 			case ACCOUNT_INACTIVE -> client.close(LoginFailReason.REASON_INACTIVE);
-			case ACCOUNT_BANNED -> {
-				client.close(new AccountKicked(AccountKickedReason.REASON_PERMANENTLY_BANNED));
-			}
+			case ACCOUNT_BANNED -> client.close(new AccountKicked(AccountKickedReason.REASON_PERMANENTLY_BANNED));
 			case ALREADY_ON_LS -> {
 				L2LoginClient oldClient = lc.getAuthedClient(info.getLogin());
 				if (oldClient != null) {
@@ -143,7 +141,7 @@ public class RequestAuthLogin extends L2LoginClientPacket {
 				GameServerInfo gsi = lc.getAccountOnGameServer(info.getLogin());
 				if (gsi != null) {
 					client.close(LoginFailReason.REASON_ACCOUNT_IN_USE);
-
+					
 					// kick from there
 					if (gsi.isAuthed()) {
 						gsi.getGameServerThread().kickPlayer(info.getLogin());

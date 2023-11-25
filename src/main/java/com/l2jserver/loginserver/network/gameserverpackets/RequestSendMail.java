@@ -26,7 +26,7 @@ import com.l2jserver.loginserver.mail.MailSystem;
  * @version 2.6.1.0
  */
 public class RequestSendMail extends BaseRecievePacket {
-
+	
 	public RequestSendMail(byte[] decrypt) {
 		super(decrypt);
 		String accountName = readS();

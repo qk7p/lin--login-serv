@@ -98,7 +98,7 @@ public final class L2LoginClient extends MMOClient<MMOConnection<L2LoginClient>>
 	public boolean decrypt(ByteBuffer buf, int size) {
 		try {
 			if (!_loginCrypt.decrypt(buf.array(), buf.position(), size)) {
-				LOG.warn("Wrong checksum from client {}!", toString());
+				LOG.warn("Wrong checksum from client {}!", this);
 				super.getConnection().close((SendablePacket<L2LoginClient>) null);
 				return false;
 			}

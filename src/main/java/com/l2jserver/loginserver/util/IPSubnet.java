@@ -20,6 +20,7 @@ package com.l2jserver.loginserver.util;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 
 public class IPSubnet {
 	final byte[] _addr;
@@ -48,7 +49,7 @@ public class IPSubnet {
 		_isIPv4 = _addr.length == 4;
 		_mask = getMask(mask, _addr.length);
 		if (!applyMask(_addr)) {
-			throw new UnknownHostException(addr.toString() + "/" + mask);
+			throw new UnknownHostException(addr + "/" + mask);
 		}
 	}
 	
@@ -94,7 +95,7 @@ public class IPSubnet {
 		}
 		
 		try {
-			return InetAddress.getByAddress(_addr).toString() + "/" + size;
+			return InetAddress.getByAddress(_addr) + "/" + size;
 		} catch (UnknownHostException e) {
 			return "Invalid";
 		}
@@ -120,9 +121,7 @@ public class IPSubnet {
 		}
 		
 		final byte[] result = new byte[maxLength];
-		for (int i = 0; i < maxLength; i++) {
-			result[i] = (byte) 0xFF;
-		}
+		Arrays.fill(result, (byte) 0xFF);
 		
 		for (int i = (maxLength << 3) - 1; i >= n; i--) {
 			result[i >> 3] = (byte) (result[i >> 3] << 1);

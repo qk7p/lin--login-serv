@@ -121,7 +121,7 @@ public class GameServerAuth extends BaseRecievePacket {
 		byte[] hexId = _hexId;
 		
 		GameServerInfo gsi = gameServerTable.getRegisteredGameServerById(id);
-		// is there a gameserver registered with this id?
+		// is there a game server registered with this id?
 		if (gsi != null) {
 			// does the hex id match?
 			if (Arrays.equals(gsi.getHexId(), hexId)) {
@@ -159,7 +159,7 @@ public class GameServerAuth extends BaseRecievePacket {
 					_server.attachGameServerInfo(gsi, _port, _hosts, _maxPlayers);
 					gameServerTable.registerServerOnDB(gsi);
 				} else {
-					// some one took this ID meanwhile
+					// someone took this ID meanwhile
 					_server.forceClose(LoginServerFail.REASON_ID_RESERVED);
 					return false;
 				}

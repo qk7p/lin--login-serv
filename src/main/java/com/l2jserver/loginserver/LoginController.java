@@ -58,7 +58,7 @@ public class LoginController {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(LoginController.class);
 	
-	/** Time before kicking the client if he didn't logged yet */
+	/** Time before kicking the client if he didn't log yet */
 	public static final int LOGIN_TIMEOUT = 60 * 1000;
 	
 	/** Authed Clients on LoginServer */
@@ -111,7 +111,7 @@ public class LoginController {
 	
 	/**
 	 * This is mostly to force the initialization of the Crypto Implementation, avoiding it being done on runtime when its first needed.<BR>
-	 * In short it avoids the worst-case execution time on runtime by doing it on loading.
+	 * In short, it avoids the worst-case execution time on runtime by doing it on loading.
 	 * @param key Any private RSA Key just for testing purposes.
 	 */
 	private void testCipher(RSAPrivateKey key) throws Exception {
@@ -231,16 +231,16 @@ public class LoginController {
 	
 	public AuthLoginResult tryCheckinAccount(L2LoginClient client, InetAddress address, AccountInfo info) {
 		if (info.getAccessLevel() < 0) {
-		    if (info.getAccessLevel() == server().autoCreateAccountsAccessLevel()) {
-		        return AuthLoginResult.ACCOUNT_INACTIVE;
-		    }
+			if (info.getAccessLevel() == server().autoCreateAccountsAccessLevel()) {
+				return AuthLoginResult.ACCOUNT_INACTIVE;
+			}
 			return AuthLoginResult.ACCOUNT_BANNED;
 		}
 		
 		AuthLoginResult ret = AuthLoginResult.INVALID_PASSWORD;
 		// check auth
 		if (canCheckIn(client, address, info)) {
-			// login was successful, verify presence on Gameservers
+			// login was successful, verify presence on game servers
 			ret = AuthLoginResult.ALREADY_ON_GS;
 			if (!isAccountInAnyGameServer(info.getLogin())) {
 				// account isn't on any GS verify LS itself
@@ -434,8 +434,8 @@ public class LoginController {
 	/**
 	 * @param client the client
 	 * @param address client host address
-	 * @param info the account info to checkin
-	 * @return true when ok to checkin, false otherwise
+	 * @param info the account info to check in
+	 * @return true when ok to check in, false otherwise
 	 */
 	public boolean canCheckIn(L2LoginClient client, InetAddress address, AccountInfo info) {
 		try {

@@ -130,7 +130,7 @@ public final class LoginServer {
 			try {
 				bindAddress = InetAddress.getByName(server().getGameServerHost());
 			} catch (Exception ex) {
-				LOG.warn("The Login Server bind address is invalid, using all avaliable IPs!", ex);
+				LOG.warn("The Login Server bind address is invalid, using all available IPs!", ex);
 			}
 		}
 		try {
