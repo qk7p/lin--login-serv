@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.l2jserver</groupId>
 	<artifactId>l2j-server-login</artifactId>
-	<version>2.6.7.1</version>
+	<version>2.6.7.2</version>
 	<name>L2J Login Server</name>
 	<description>L2J Login Server handles the game client authentication and login.</description>
 	<url>https://bitbucket.org/l2jserver/l2j-server-login/</url>
@@ -18,8 +18,9 @@
 		<l2j-server-commons.version>2.6.7.0</l2j-server-commons.version>
 		<!-- Plugins -->
 		<dependency-check-maven.version>9.0.6</dependency-check-maven.version>
-		<maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
 		<maven-assembly-plugin.version>3.6.0</maven-assembly-plugin.version>
+		<maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+		<maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
 	</properties>
 	<licenses>
 		<license>
@@ -68,6 +69,14 @@
 	<build>
 		<finalName>l2jlogin</finalName>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<proc>full</proc>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
